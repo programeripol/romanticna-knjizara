@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Romantična knjižara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=EB+Garamond:ital,wght@0,400..600;1,400..500&family=Caveat:wght@400..600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EFE4DC;
+  --paper-deep:#E4D5CC;
+  --ink:#37262E;
+  --ink-soft:#6A5158;
+  --damson:#6E3B50;
+  --kraft:#A87C55;
+  --kraft-lo:#966C48;
+  --kraft-hi:#C69A6D;
+  --sage:#6F7F66;
+  --gilt:#BE9A48;
+  --card:#F6EFE3;
+
+  /* Sve slike stoje kao zasebne datoteke u mapi slike/, pa se cacheiraju
+     i stranica se brže učita. Stranica zato traži tu mapu uz sebe i ne
+     radi ako se index.html premjesti sam. */
+  --hero-img:url('slike/hero.jpg');
+  --hero-door:url('slike/hero-vrata.jpg');
+  --hero-img-mob:url('slike/hero-mob.jpg');
+
+  --display:"Fraunces",Georgia,serif;
+  --body:"EB Garamond",Georgia,serif;
+  --hand:"Caveat",cursive;
+
+  --pad:clamp(1.25rem,5vw,5rem);
+  --rule:0;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:clamp(1.02rem,.55vw + .92rem,1.18rem);
+  line-height:1.62;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+
+/* paper grain over everything */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:90;
+  opacity:.32;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+.eyebrow{
+  font-family:var(--body);
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  font-size:.72rem;
+  color:var(--ink-soft);
+}
+.rule{display:none}
+
+/* ---------- header ---------- */
+.masthead{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  padding-bottom:1.4rem;
+  background:linear-gradient(180deg,
+    rgba(239,228,220,.92) 0%,
+    rgba(239,228,220,.72) 42%,
+    rgba(239,228,220,.34) 70%,
+    rgba(239,228,220,0) 100%);
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 58%,rgba(0,0,0,.5) 80%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 58%,rgba(0,0,0,.5) 80%,transparent 100%);
+  backdrop-filter:blur(9px);
+  -webkit-backdrop-filter:blur(9px);
+}
+.masthead__in{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;gap:1rem;
+  padding:.7rem var(--pad);
+}
+.masthead__in .wordmark{justify-self:start}
+.masthead__in .basket{justify-self:end}
+.wordmark{
+  font-family:var(--display);
+  font-optical-sizing:auto;
+  font-weight:300;
+  font-style:italic;
+  font-size:1.62rem;
+  letter-spacing:.005em;
+  line-height:1;
+  text-decoration:none;color:var(--ink);
+  transition:color .35s ease;
+}
+.wordmark:hover{color:var(--damson)}
+
+.nav{
+  display:flex;gap:1.6rem;align-items:center;
+  grid-column:2;justify-self:center;
+}
+.nav a{
+  position:relative;
+  text-decoration:none;color:var(--ink);
+  font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;
+  padding-bottom:.55rem;
+  transition:color .35s ease;
+}
+.nav a::after{
+  content:"";position:absolute;
+  left:0;right:0;bottom:-.4rem;height:1.05rem;
+  background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2096%2018%22%20fill%3D%22none%22%20stroke%3D%22%236E3B50%22%20stroke-width%3D%221.1%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M0%2011c8-7%2016-7%2024%200s16%207%2024%200%2016-7%2024%200%2016%207%2024%200%22%2F%3E%3Cg%20stroke-width%3D%22.95%22%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%226.4%22%20r%3D%223.5%22%2F%3E%3Cpath%20d%3D%22M25.4%206.4a1.4%201.4%200%201%201-1.9-1.3%202.5%202.5%200%201%200%202.9%203.1%22%2F%3E%3C%2Fg%3E%3Cg%20stroke-width%3D%22.95%22%3E%3Ccircle%20cx%3D%2272%22%20cy%3D%226.4%22%20r%3D%223.5%22%2F%3E%3Cpath%20d%3D%22M73.4%206.4a1.4%201.4%200%201%201-1.9-1.3%202.5%202.5%200%201%200%202.9%203.1%22%2F%3E%3C%2Fg%3E%3Cpath%20stroke-width%3D%22.9%22%20d%3D%22M48%2015c2.6-.5%203.9-2.1%203.9-4.4-2.6.4-3.9%202-3.9%204.4Z%22%2F%3E%3Cpath%20stroke-width%3D%22.9%22%20d%3D%22M48%2015c-2.6-.5-3.9-2.1-3.9-4.4%202.6.4%203.9%202%203.9%204.4Z%22%2F%3E%3C%2Fsvg%3E") repeat-x left center;
+  background-size:auto 1.05rem;
+  opacity:0;transform:translateY(5px);
+  transition:opacity .4s ease, transform .55s cubic-bezier(.2,.8,.2,1);
+  pointer-events:none;
+}
+.nav a:hover,.nav a:focus-visible{color:var(--damson)}
+.nav a:hover::after,.nav a:focus-visible::after{
+  opacity:1;transform:translateY(0);
+}
+.basket{
+  border:0;background:none;padding:.42rem 0;
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-soft);transition:color .3s ease;
+}
+.basket:hover{color:var(--damson)}
+@media(max-width:860px){
+  .nav{display:none}
+  .masthead__in{grid-template-columns:1fr auto}
+}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;
+  height:210vh;                 /* dužina skrolanja kroz sekvencu */
+  background:var(--paper);
+}
+.hero__stage{
+  position:sticky;top:0;
+  height:100vh;min-height:32rem;
+  overflow:hidden;
+  display:flex;justify-content:center;align-items:flex-start;
+  padding:clamp(3.5rem,10vh,7rem) var(--pad) 0;
+  text-align:center;
+}
+.hero__photo{
+  position:absolute;top:-6%;left:0;right:0;bottom:-6%;
+  background-size:cover;
+  background-position:50% 62%;
+  filter:saturate(.82) contrast(1.03);
+  will-change:transform,opacity;
+}
+.layer-a{background-image:var(--hero-img)}
+.layer-b{background-image:var(--hero-door);background-position:50% 46%;opacity:0}
+/* povuci zlatni ton prema prašnjavo ružičastoj paleti stranice */
+.hero__photo::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    rgba(239,228,220,.42) 0%,
+    rgba(232,213,204,.14) 40%,
+    rgba(110,59,80,.20) 100%);
+}
+/* mekano polje iza teksta, da naslov ostane čitljiv */
+.hero__veil{
+  position:absolute;inset:0;
+  background:radial-gradient(72% 48% at 50% 22%,
+    rgba(247,240,232,.97),
+    rgba(247,240,232,.86) 40%,
+    rgba(247,240,232,.42) 62%,
+    transparent 82%);
+  will-change:opacity;
+}
+.hero__in{
+  position:relative;z-index:2;max-width:52rem;margin:0 auto;
+  will-change:transform,opacity;
+}
+.hero h1{
+  font-family:var(--display);font-optical-sizing:auto;
+  font-weight:400;
+  font-size:clamp(2.6rem,8vw,5.6rem);
+  line-height:.96;letter-spacing:-.015em;
+  margin:1.1rem 0 0;
+  text-shadow:0 1px 26px rgba(247,240,232,.95), 0 1px 8px rgba(247,240,232,.9);
+}
+.hero h1 em{
+  display:block;font-style:italic;font-weight:300;
+  color:var(--damson);
+}
+.hero__in > p{
+  max-width:33rem;margin:1.5rem auto 0;
+  color:var(--ink-soft);font-size:1.04rem;
+  text-shadow:0 1px 16px rgba(247,240,232,.95);
+}
+.hero__in .eyebrow{text-shadow:0 1px 14px rgba(247,240,232,.95)}
+.hero__cta{
+  display:inline-flex;align-items:center;gap:.6rem;
+  margin-top:2rem;padding:.85rem 1.9rem;
+  background:var(--ink);color:var(--paper);
+  border:0;border-radius:2px;text-decoration:none;
+  font-family:var(--body);font-size:.78rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  transition:background .3s ease;
+}
+.hero__cta:hover{background:var(--damson)}
+/* poziv koji se pojavi kad dođeš do vrata */
+
+@media(max-width:720px){
+  .hero{height:190vh}
+  .hero__stage{min-height:30rem;padding-top:clamp(2.5rem,8vh,5rem)}
+  .layer-a{background-image:var(--hero-img-mob);background-position:50% 42%}
+  .hero__veil{
+    background:radial-gradient(96% 42% at 50% 18%,
+      rgba(247,240,232,.98),
+      rgba(247,240,232,.9) 42%,
+      rgba(247,240,232,.5) 66%,
+      transparent 86%);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .hero{height:auto}
+  .hero__stage{position:relative;height:auto;min-height:34rem;padding-bottom:clamp(3rem,8vh,6rem)}
+  .layer-b{display:none}
+}
+
+/* ---------- promise band ---------- */
+.promise{
+  background:linear-gradient(180deg,
+    rgba(232,213,204,0) 0%,
+    rgba(232,213,204,.55) 22%,
+    rgba(232,213,204,.55) 78%,
+    rgba(232,213,204,0) 100%);
+  padding:1.5rem 0;
+}
+.promise__in{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  max-width:78rem;margin:0 auto;
+}
+.promise__item{
+  display:flex;align-items:flex-start;gap:.95rem;
+  padding:1.75rem clamp(1rem,2.2vw,2rem);
+  text-align:left;text-decoration:none;color:inherit;
+  transition:transform .4s cubic-bezier(.2,.8,.2,1);
+}
+.promise__item:hover{transform:translateY(-3px)}
+.promise__item:hover .promise__icon{color:var(--ink)}
+.promise__icon{transition:color .4s ease}
+.promise__icon{
+  flex:0 0 auto;width:38px;height:38px;
+  color:var(--damson);
+  margin-top:.1rem;
+}
+.promise__t{
+  font-size:.74rem;letter-spacing:.17em;text-transform:uppercase;
+  margin:0 0 .3rem;color:var(--ink);
+}
+.promise__d{
+  margin:0;font-size:.94rem;line-height:1.45;color:var(--ink-soft);
+}
+@media(max-width:820px){
+  .promise__in{grid-template-columns:1fr}
+  .promise__item{padding:1.35rem var(--pad)}
+}
+
+/* ---------- generic section ---------- */
+.section{padding:clamp(4rem,9vw,7.5rem) var(--pad)}
+.section__head{max-width:78rem;margin:0 auto clamp(2.5rem,5vw,4rem)}
+.section__head h2{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(2rem,5.2vw,3.4rem);
+  line-height:1.02;margin:.7rem 0 0;letter-spacing:-.01em;
+}
+.section__head p{max-width:34rem;color:var(--ink-soft);margin:.9rem 0 0}
+
+/* ---------- parcels ---------- */
+.parcels{
+  max-width:64rem;margin:0 auto;
+  display:grid;gap:clamp(1.6rem,3.5vw,3rem);
+  grid-template-columns:repeat(3,1fr);
+}
+@media(max-width:900px){.parcels{grid-template-columns:1fr;max-width:22rem}}
+
+.parcel__inner{
+  position:relative;
+  aspect-ratio:135/205;   /* proporcija knjige 13,5 x 20,5 cm */
+  min-height:24rem;
+}
+.face{
+  position:absolute;inset:0;
+  border-radius:3px;
+  display:flex;flex-direction:column;
+  transition:opacity .45s ease, transform .55s cubic-bezier(.2,.8,.2,1);
+}
+.face--wrap{opacity:1;transform:none}
+.face--card{opacity:0;transform:scale(1.03);pointer-events:none}
+.parcel.is-open .face--wrap{opacity:0;transform:scale(.97);pointer-events:none}
+.parcel.is-open .face--card{opacity:1;transform:none;pointer-events:auto}
+.face--wrap{
+  background:
+    linear-gradient(102deg, rgba(255,255,255,.07) 0 38%, rgba(0,0,0,.03) 39%),
+    repeating-linear-gradient(93deg, rgba(70,45,25,.05) 0 2px, transparent 2px 8px),
+    linear-gradient(158deg, var(--kraft-hi), var(--kraft) 58%, var(--kraft-lo));
+  box-shadow:0 18px 34px -22px rgba(55,38,46,.6), inset 0 0 0 1px rgba(70,45,25,.14);
+  border:0;
+  text-align:left;
+  padding:1.9rem 1.6rem;
+  color:#402C1C;
+  font-family:var(--body);
+  overflow:hidden;
+}
+
+/* špaga, mašna, pečat */
+.twine{position:absolute;pointer-events:none;z-index:1}
+.twine--v{
+  top:-1px;bottom:-1px;left:50%;width:9px;margin-left:-4.5px;
+  background:repeating-linear-gradient(58deg,#EFE4CC 0 2px,#C8B590 2px 4px);
+  box-shadow:2px 0 6px -2px rgba(60,40,20,.45),-2px 0 6px -2px rgba(60,40,20,.45);
+}
+.twine--h{
+  left:-1px;right:-1px;top:60%;height:9px;
+  background:repeating-linear-gradient(58deg,#EFE4CC 0 2px,#C8B590 2px 4px);
+  box-shadow:0 2px 6px -2px rgba(60,40,20,.45),0 -2px 6px -2px rgba(60,40,20,.45);
+}
+.bow{
+  position:absolute;left:50%;top:60%;
+  width:104px;height:66px;margin:-58px 0 0 -52px;
+  z-index:2;pointer-events:none;
+  filter:drop-shadow(0 3px 4px rgba(60,40,20,.35));
+}
+.seal{
+  position:absolute;left:50%;top:60%;
+  width:52px;height:52px;margin:-22px 0 0 -26px;
+  z-index:3;pointer-events:none;
+  border-radius:47% 53% 45% 55% / 53% 46% 54% 47%;
+  background:radial-gradient(circle at 34% 28%, #CE4A3C 0%, #A82A22 52%, #7C1912 100%);
+  box-shadow:0 4px 9px -3px rgba(60,20,15,.7), inset 0 -3px 6px rgba(90,20,15,.55), inset 0 3px 5px rgba(255,180,160,.35);
+  display:flex;align-items:center;justify-content:center;
+}
+.seal svg{width:26px;height:26px;opacity:.42}
+
+.uvez{
+  position:absolute;right:.85rem;top:1rem;z-index:2;
+  writing-mode:vertical-rl;
+  font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(58,38,22,.62);
+}
+.wrap__title{
+  position:absolute;left:1.6rem;top:1.7rem;right:3.4rem;z-index:2;
+  font-family:var(--hand);
+  font-size:clamp(2rem,2.9vw,2.6rem);line-height:1.02;
+  color:#3A2616;max-width:8.2ch;
+  text-align:left;
+}
+.wrap__list{
+  position:absolute;left:1.6rem;bottom:1.6rem;z-index:2;max-width:60%;
+  font-family:var(--hand);
+  font-size:clamp(1.12rem,1.5vw,1.3rem);line-height:1.36;
+  color:#3A2616;text-align:left;
+}
+.doodle{
+  position:absolute;right:1.3rem;bottom:1.4rem;z-index:2;
+  width:72px;opacity:.72;
+}
+.parcel__price{
+  position:absolute;left:1.6rem;top:auto;bottom:auto;z-index:2;
+  transform:translateY(0);top:32%;
+  font-family:var(--hand);font-size:1.45rem;color:#3A2616;
+}
+.parcel__hint{
+  position:absolute;right:1.1rem;bottom:.55rem;z-index:2;
+  font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(58,38,22,.5);
+}
+
+/* handwritten card */
+.face--card{
+  background:var(--card);
+  background-image:repeating-linear-gradient(180deg, transparent 0 27px, rgba(110,59,80,.11) 27px 28px);
+  box-shadow:0 18px 34px -22px rgba(55,38,46,.55);
+  padding:1.6rem 1.5rem 1.3rem;
+  gap:.7rem;
+}
+.card__stamp{
+  align-self:flex-start;
+  font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--damson);
+  border:1px solid rgba(110,59,80,.4);
+  border-radius:2px;padding:.25rem .55rem;
+}
+.card__note{
+  font-family:var(--hand);
+  font-size:1.3rem;line-height:1.34;
+  overflow:auto;
+  color:var(--ink);margin:0;
+}
+.card__sign{
+  font-family:var(--hand);font-size:1.2rem;color:var(--damson);
+  margin:0;
+}
+.card__actions{margin-top:auto;display:flex;gap:.6rem;align-items:center}
+.face--card{cursor:pointer}
+.btn-add{
+  width:100%;
+  background:var(--ink);color:var(--paper);border:0;border-radius:2px;
+  padding:.72rem 1rem;
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+}
+.btn-add:hover{background:var(--damson)}
+.btn-back{
+  background:none;border:1px solid rgba(55,38,46,.3);border-radius:2px;
+  padding:.72rem .95rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+}
+.btn-back:hover{border-color:var(--ink)}
+
+/* ---------- shelves ---------- */
+.shelf-wrap{max-width:78rem;margin:0 auto}
+.shelf{margin-bottom:2.6rem}
+.shelf__label{
+  display:inline-block;
+  font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-soft);
+  margin-bottom:1.1rem;
+}
+.books{
+  display:flex;align-items:flex-end;gap:5px;
+  overflow-x:auto;padding:20px 0 2px;
+  scrollbar-width:thin;
+}
+.spine{
+  flex:0 0 auto;
+  border:0;border-radius:2px 2px 0 0;
+  padding:1rem .38rem;
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  font-family:var(--display);
+  font-size:.78rem;font-weight:500;letter-spacing:.02em;
+  color:#F3EAE0;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1);
+  box-shadow:inset -3px 0 6px -3px rgba(0,0,0,.4), inset 3px 0 5px -3px rgba(255,255,255,.3);
+  display:flex;align-items:center;gap:.85rem;
+}
+.spine--foto{
+  /* relativan polozaj drzi skriveni naslov unutar hrbata, inace izlazi iz ekrana */
+  position:relative;
+  width:34px;padding:0;
+  background-size:cover;
+  background-position:center;
+  box-shadow:0 8px 16px -10px rgba(55,38,46,.7),
+             inset -3px 0 6px -3px rgba(0,0,0,.35),
+             inset 3px 0 5px -3px rgba(255,255,255,.28);
+}
+.vizualno-skriveno{
+  position:absolute;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;
+}
+.spine__autor{
+  font-family:var(--body);
+  font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;
+  opacity:.68;flex:0 0 auto;
+}
+.spine__naslov{
+  font-family:var(--display);font-style:italic;font-weight:400;
+  font-size:.86rem;letter-spacing:.01em;
+}
+.spine:hover,.spine:focus-visible{transform:translateY(-14px)}
+.ledge{
+  position:relative;
+  height:16px;
+  border-radius:0 0 3px 3px;
+  /* prava daska: fotografija ruba hrastove police, slozena zrcalno pa se ponavlja bez sava */
+  background:
+    linear-gradient(180deg, rgba(255,234,204,.30) 0%, rgba(255,234,204,0) 38%, rgba(58,36,18,.32) 100%),
+    url("slike/drvo-polica.jpg") repeat-x;
+  background-size:auto 100%, auto 100%;
+  box-shadow:
+    inset 0 2px 3px rgba(255,225,190,.35),
+    0 14px 22px -14px rgba(55,38,46,.75);
+}
+.ledge::after{
+  content:"";position:absolute;left:0;right:0;top:100%;height:26px;
+  background:radial-gradient(70% 100% at 50% 0%, rgba(55,38,46,.22), rgba(55,38,46,0) 74%);
+  filter:blur(2px);
+}
+
+/* stvari koje ljudi drže među knjigama */
+.stvar{
+  flex:0 0 auto;align-self:flex-end;
+  pointer-events:none;
+  margin:0 2px;
+}
+.stvar svg{display:block}
+.stvar__foto{display:block;height:104px;width:auto}
+
+/* zaglavlje police: naziv + strelice */
+.shelf__head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;margin-bottom:1.1rem;
+}
+.shelf__label{margin:0}
+.arrows{display:flex;gap:.35rem;opacity:0;transition:opacity .4s ease}
+.shelf:hover .arrows,.shelf:focus-within .arrows{opacity:1}
+.arrow{
+  width:34px;height:34px;padding:0;
+  background:none;border:0;border-radius:50%;
+  color:var(--ink-soft);
+  display:flex;align-items:center;justify-content:center;
+  transition:color .3s ease, background .3s ease, transform .3s ease;
+}
+.arrow:hover:not(:disabled){color:var(--damson);background:rgba(246,239,227,.8)}
+.arrow:disabled{opacity:.22;cursor:default}
+.arrow svg{width:17px;height:17px}
+
+/* koliko je police pregledano */
+.track{
+  position:relative;height:2px;margin:1.1rem 0 0;
+  background:linear-gradient(90deg,
+    rgba(55,38,46,0), rgba(55,38,46,.13) 12%,
+    rgba(55,38,46,.13) 88%, rgba(55,38,46,0));
+  border-radius:2px;
+}
+.track__thumb{
+  position:absolute;top:-1px;height:4px;border-radius:4px;
+  background:linear-gradient(90deg, rgba(110,59,80,.35), var(--damson), rgba(110,59,80,.35));
+  transition:left .18s ease, width .3s ease;
+}
+.track.is-hidden{display:none}
+
+/* nigdje vodoravnih klizača */
+.books,.covers{
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  scroll-behavior:smooth;
+}
+.books::-webkit-scrollbar,.covers::-webkit-scrollbar{display:none;width:0;height:0}
+
+/* naslovnice, polica s licem prema van */
+.covers{
+  display:flex;align-items:flex-start;gap:clamp(.8rem,2vw,1.4rem);
+  overflow-x:auto;padding:20px 0 6px;
+  scrollbar-width:thin;
+}
+.cover{
+  flex:0 0 auto;
+  width:clamp(118px,20vw,152px);
+  background:none;border:0;padding:0;
+  text-align:left;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.cover:hover,.cover:focus-visible{transform:translateY(-10px)}
+.cover__art{
+  position:relative;
+  aspect-ratio:13/21;                 /* format knjige 13,5 x 21 cm */
+  border-radius:2px;overflow:hidden;
+  box-shadow:0 14px 26px -16px rgba(55,38,46,.85), inset 0 0 0 1px rgba(55,38,46,.12);
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:.85rem .7rem;
+}
+.cover__art img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.cover__art::before{                   /* hrbat */
+  content:"";position:absolute;left:0;top:0;bottom:0;width:7px;
+  background:linear-gradient(90deg,rgba(0,0,0,.22),transparent);
+  z-index:2;
+}
+.cover__naslov{
+  font-family:var(--display);font-weight:500;
+  font-size:.84rem;line-height:1.18;color:#F6EFE3;
+  margin:0;position:relative;z-index:1;
+}
+.cover__autor{
+  font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(246,239,227,.78);margin:0;position:relative;z-index:1;
+}
+.cover__meta{margin:1.05rem 0 0}
+.cover__t{
+  font-family:var(--body);font-weight:500;
+  font-size:1rem;line-height:1.3;letter-spacing:.005em;
+  margin:0;color:var(--ink);
+  min-height:2.6em;                  /* dva reda, da cijene ostanu u istoj liniji */
+  display:flex;align-items:flex-start;
+}
+.cover__c{font-size:.86rem;color:var(--ink-soft);margin:.35rem 0 0}
+
+/* book detail panel */
+.detail{
+  margin-top:1rem;
+  background:rgba(246,239,227,.85);
+  border:0;border-radius:4px;
+  box-shadow:0 22px 40px -30px rgba(55,38,46,.6);
+  padding:1.3rem 1.4rem;
+  display:none;
+  gap:.9rem;
+  align-items:flex-start;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+.detail.is-on{display:flex}
+.detail__korice{
+  flex:0 0 auto;width:92px;
+  aspect-ratio:13/21;border-radius:3px;overflow:hidden;
+  box-shadow:0 16px 28px -18px rgba(55,38,46,.85);
+  background:var(--paper-deep);
+}
+.detail__korice img{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:640px){.detail__korice{width:74px}}
+.detail__title{font-family:var(--display);font-size:1.3rem;line-height:1.15;margin:0}
+.detail__author{color:var(--ink-soft);font-size:.9rem;margin:.2rem 0 .6rem;font-style:italic}
+.detail__note{font-family:var(--hand);font-size:1.28rem;line-height:1.35;margin:0;max-width:34rem}
+.detail__side{display:flex;flex-direction:column;align-items:flex-end;gap:.6rem;margin-left:auto}
+.detail__price{font-family:var(--display);font-size:1.3rem}
+/* stara cijena stoji uz novu, precrtana i tiša */
+.detail__stara{font-family:var(--body);font-size:.92rem;color:var(--ink-soft);text-decoration:line-through;text-decoration-thickness:1px;margin-left:.5rem}
+@media(max-width:640px){
+  .detail__side{align-items:flex-start;margin-left:0;width:100%}
+  .detail__side .btn-add{width:100%}
+}
+
+/* dnevnik */
+.zapisi{
+  max-width:78rem;margin:0 auto;
+  display:grid;gap:clamp(1.6rem,3.5vw,3rem);
+  grid-template-columns:repeat(3,1fr);
+}
+@media(max-width:900px){.zapisi{grid-template-columns:1fr;max-width:34rem}}
+.zapis{
+  display:block;text-decoration:none;color:inherit;
+  background:none;border:0;padding:0;width:100%;text-align:left;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1);
+}
+.zapis:hover{transform:translateY(-5px)}
+.zapis__slika{
+  aspect-ratio:4/3;border-radius:3px;
+  box-shadow:0 22px 38px -28px rgba(55,38,46,.75);
+  display:flex;align-items:flex-end;padding:1.1rem;
+}
+.zapis__oznaka{
+  font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(246,239,227,.9);
+}
+.zapis__datum{
+  font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-soft);margin:1.1rem 0 .4rem;
+}
+.zapis h3{
+  font-family:var(--display);font-weight:400;
+  font-size:1.4rem;line-height:1.15;margin:0 0 .55rem;
+}
+.zapis p{margin:0;color:var(--ink-soft);font-size:.95rem;line-height:1.5}
+.zapis__vise{
+  display:inline-block;margin-top:.8rem;
+  font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--damson);
+}
+
+/* pogled za čitanje */
+.citanje{
+  position:fixed;inset:0;z-index:120;
+  background:var(--paper);
+  overflow-y:auto;
+  opacity:0;visibility:hidden;
+  transition:opacity .5s ease, visibility .5s;
+}
+.citanje.is-on{opacity:1;visibility:visible}
+.citanje__in{
+  max-width:40rem;margin:0 auto;
+  padding:clamp(4.5rem,10vw,7rem) var(--pad) clamp(4rem,8vw,6rem);
+}
+.citanje__zatvori{
+  position:fixed;top:1.1rem;right:clamp(1rem,4vw,2.5rem);z-index:2;
+  width:42px;height:42px;padding:0;
+  background:rgba(246,239,227,.9);border:0;border-radius:50%;
+  color:var(--ink-soft);
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+  transition:color .3s ease, transform .3s ease;
+}
+.citanje__zatvori:hover{color:var(--damson);transform:rotate(90deg)}
+.citanje__zatvori svg{width:17px;height:17px}
+.citanje h2{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(2rem,5.5vw,3.1rem);
+  line-height:1.04;letter-spacing:-.015em;margin:0;
+}
+.citanje__datum{
+  font-family:var(--display);font-style:italic;
+  color:var(--ink-soft);font-size:1.05rem;margin:.9rem 0 2.4rem;
+}
+.citanje p{
+  font-size:1.12rem;line-height:1.76;margin:0 0 1.5rem;
+}
+.citanje__potpis{
+  font-family:var(--hand);font-size:1.6rem;color:var(--damson);
+  margin-top:2.4rem;
+}
+
+/* ---------- letter ---------- */
+.letter-section{
+  background:radial-gradient(120% 70% at 50% 50%,
+    rgba(232,213,204,.75), rgba(239,228,220,0) 78%);
+}
+.letter{
+  max-width:40rem;margin:0 auto;
+  background:var(--card);
+  padding:clamp(2rem,5vw,3.4rem);
+  box-shadow:0 30px 50px -34px rgba(55,38,46,.75);
+  transform:rotate(-.7deg);
+  position:relative;
+}
+
+.letter h2{
+  font-family:var(--display);font-weight:400;font-style:italic;
+  font-size:clamp(1.7rem,4vw,2.4rem);margin:.6rem 0 1.2rem;line-height:1.1;
+}
+.letter p{font-family:var(--hand);font-size:1.42rem;line-height:1.42;margin:0 0 1rem}
+.letter .signoff{color:var(--damson);font-size:1.6rem}
+
+/* ---------- newsletter ---------- */
+.post{max-width:44rem;margin:0 auto;text-align:center}
+.post h2{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(2rem,5vw,3.2rem);margin:.8rem 0 .8rem;line-height:1.03;
+}
+.post p{color:var(--ink-soft);margin:0 auto 2rem;max-width:30rem}
+.post__form{display:flex;gap:.6rem;max-width:30rem;margin:0 auto;flex-wrap:wrap}
+.post__form input{
+  flex:1 1 14rem;
+  background:rgba(255,255,255,.5);border:0;border-radius:3px;
+  padding:.85rem 1rem;font-family:var(--body);font-size:1rem;color:var(--ink);
+}
+.post__form input:focus{outline:none;background:rgba(255,255,255,.85)}
+.post__form input::placeholder{color:rgba(55,38,46,.42)}
+.post__form button{
+  background:var(--damson);color:var(--card);border:0;border-radius:2px;
+  padding:.8rem 1.6rem;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
+}
+.post__form button:hover{background:var(--ink)}
+.post__ok{margin-top:1rem;font-family:var(--hand);font-size:1.3rem;color:var(--damson);min-height:1.6em}
+
+/* ---------- footer ---------- */
+.foot{
+  padding:clamp(2.5rem,5vw,4rem) var(--pad) 2.5rem;
+  background:var(--paper);
+}
+.foot__in{
+  max-width:78rem;margin:0 auto;
+  display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;align-items:flex-start;
+}
+.foot p{margin:.3rem 0;color:var(--ink-soft);font-size:.9rem}
+.foot__links{display:flex;flex-direction:column;gap:.4rem}
+.foot__links a{color:var(--ink-soft);text-decoration:none;font-size:.9rem}
+.foot__links a:hover{color:var(--damson)}
+
+/* ---------- toast ---------- */
+.toast{
+  position:fixed;left:50%;bottom:1.6rem;transform:translate(-50%,140%);
+  background:var(--ink);color:var(--paper);
+  padding:.8rem 1.4rem;border-radius:2px;
+  font-family:var(--hand);font-size:1.2rem;
+  z-index:80;transition:transform .5s cubic-bezier(.2,.8,.2,1);
+}
+.toast.is-on{transform:translate(-50%,0)}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.is-in{opacity:1;transform:none}
+
+:focus-visible{outline:2px solid var(--damson);outline-offset:3px}
+
+@media(prefers-reduced-motion:reduce){
+  *{transition-duration:.01ms !important;animation-duration:.01ms !important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead__in">
+    <a class="wordmark" href="#">Romantična knjižara</a>
+    <nav class="nav">
+      <a href="#police">Police</a>
+      <a href="#spoj">Spoj naslijepo</a>
+      <a href="#dnevnik">Dnevnik</a>
+      <a href="#pisma">Pisma</a>
+      <a href="#pismo">O knjižari</a>
+    </nav>
+    <button class="basket" id="basket">Košarica</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero__stage">
+    <div class="hero__photo layer-a" role="img" aria-label="Pročelje knjižare, košara sa zamotanim knjigama kraj ulaza"></div>
+    <div class="hero__photo layer-b" aria-hidden="true"></div>
+    <div class="hero__veil" aria-hidden="true"></div>
+
+    <div class="hero__in">
+      <p class="eyebrow">Online romantična knjižara</p>
+      <h1>Biraš s police,<em>ne iz izbornika.</em></h1>
+      <p>Nema padajućih kategorija. Ima polica, a na njima prave knjige i sve ono što ide uz čitanje: ljestve za biblioteku, brojač pročitanog, noćne lampe, bookmarkeri.</p>
+      <a class="hero__cta" href="#police">Pogledaj police</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROMISE -->
+<div class="promise">
+  <div class="promise__in">
+
+    <a class="promise__item" href="#police">
+      <svg class="promise__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 19.5h32M4 33.5h32"/>
+        <path d="M8 19.5v-9h3.6v9M13.4 19.5v-11H17v11M18.8 19.5v-7.4h3.4v7.4"/>
+        <path d="M25.6 19.5 24 12.2l3.5-.8 1.6 8.1"/>
+        <path d="M9 33.5v-8h3.6v8M14.4 33.5v-10.4H18v10.4M19.8 33.5v-6.6h3.4v6.6M25.2 33.5v-9h3.4v9"/>
+      </svg>
+      <div>
+        <p class="promise__t">Police, ne izbornik</p>
+        <p class="promise__d">Ne tražiš po abecedi. Prilaziš polici i uzimaš ono što ti zapne za oko, kao u pravom dućanu.</p>
+      </div>
+    </a>
+
+    <a class="promise__item" href="#spoj">
+      <svg class="promise__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="4.5" y="11.5" width="31" height="24"/>
+        <path d="M20 11.5v24"/>
+        <path d="M4.5 24h31"/>
+        <path d="M20 11.5c-1.6-3.4-4.2-6-7-6-2 0-3.2 1.3-3.2 2.9 0 2 2.1 3.1 5 3.1h5.2Z"/>
+        <path d="M20 11.5c1.6-3.4 4.2-6 7-6 2 0 3.2 1.3 3.2 2.9 0 2-2.1 3.1-5 3.1H20Z"/>
+      </svg>
+      <div>
+        <p class="promise__t">Spoj naslijepo</p>
+        <p class="promise__d">Smeđi papir, špaga, voštani pečat i razglednica pisana rukom. Naslov saznaješ tek kad presiječeš špagu.</p>
+      </div>
+    </a>
+
+    <a class="promise__item" href="#police">
+      <svg class="promise__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M11.5 18.5 15 8.5h10l3.5 10Z"/>
+        <path d="M20 18.5v10"/>
+        <path d="M13.5 31.5c0-1.8 2.9-3 6.5-3s6.5 1.2 6.5 3"/>
+        <path d="M11.5 34.5h17"/>
+        <path d="M31 11.5c2.6.6 4.2 2.4 4.2 4.6"/>
+      </svg>
+      <div>
+        <p class="promise__t">I sve uz čitanje</p>
+        <p class="promise__d">Noćne lampe, brojač pročitanog, ljestve za biblioteku, bookmarkeri. Ono što knjiga voli oko sebe.</p>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- POLICE -->
+<section class="section" id="police" style="background:linear-gradient(180deg, rgba(255,255,255,0) 0%, #FFFFFF 11%, #FFFFFF 89%, rgba(255,255,255,0) 100%)">
+  <div class="section__head reveal">
+    <p class="eyebrow">Police</p>
+    <h2>Police umjesto<br>kategorija.</h2>
+    <p>Svaka polica je jedan raspoloženje ili jedna tema. Na njima stoje prave knjige i sve ostalo što pripada uz čitanje.</p>
+  </div>
+
+  <div class="shelf-wrap" id="shelves"></div>
+</section>
+
+<!-- SPOJ NASLIJEPO -->
+<section class="section" id="spoj">
+  <div class="section__head reveal">
+    <p class="eyebrow">Spoj naslijepo</p>
+    <h2>Biraš osjećaj,<br>mi biramo knjigu.</h2>
+    <p>Tri paketa svaki tjedan. Naslov ostaje tajna do trenutka kad presiječeš špagu. Razglednica ti unaprijed kaže u što se upuštaš.</p>
+  </div>
+
+  <div class="parcels">
+
+    <article class="parcel reveal">
+      <div class="parcel__inner">
+        <button class="face face--wrap" data-flip aria-label="Otvori razglednicu za paket: mali grad">
+          <span class="twine twine--v" aria-hidden="true"></span>
+          <span class="twine twine--h" aria-hidden="true"></span>
+          <svg class="bow" viewBox="0 0 104 66" fill="none" stroke="#E7DBBE" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M52 30C30 6 8 16 16 32c6 12 26 8 36-2Z"/><path d="M52 30c22-24 44-14 36 2-6 12-26 8-36-2Z"/><path d="M52 31c-5 14-16 22-30 29"/><path d="M52 31c6 14 18 21 32 26"/></svg>
+          <span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#FFF1EA" stroke-width="1.6" stroke-linejoin="round"><path d="M12 7c-2.4-2-5-2.4-8-2v11c3-.4 5.6 0 8 2 2.4-2 5-2.4 8-2V5c-3-.4-5.6 0-8 2Z"/><path d="M12 7v11"/></svg></span>
+          <span class="uvez">Meki uvez</span>
+          <span class="wrap__title">Spoj naslijepo</span>
+          <span class="parcel__price">18 €</span>
+          <span class="wrap__list">mali grad<br>slow burn<br>samo jedan krevet</span>
+          <svg class="doodle" viewBox="0 0 60 46" fill="none" stroke="#4A3220" stroke-width="1" stroke-linecap="round" aria-hidden="true"><path d="M14 45c-4-10-4-20 1-28"/><path d="M15 24c-6-2-9-7-9-12 6 0 10 4 9 12Z"/><path d="M17 17c4-4 4-10 2-14-4 3-5 9-2 14Z"/><path d="M18 30c6-1 10-5 11-10-6-1-11 3-11 10Z"/><circle cx="24" cy="7" r="3.4"/><path d="M40 45c-2-8 0-13 4-16 4-3 4-8 0-10-3-1.6-6 .4-6 3"/><path d="M44 29c4 1 8-1 9-5"/></svg>
+          <span class="parcel__hint">Dodirni</span>
+        </button>
+        <div class="face face--card">
+          <span class="card__stamp">Razglednica iz knjižare</span>
+          <p class="card__note">Pročitala sam je u jednom danu, na kauču, uz tri šalice čaja. Ako voliš kad se dvoje ljudi mrzi prvih dvjesto stranica, a onda počne kiša, ova je tvoja.</p>
+          <p class="card__sign">Rosa</p>
+          <div class="card__actions">
+            <button class="btn-add" data-add>Zamotaj mi je</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="parcel reveal">
+      <div class="parcel__inner">
+        <button class="face face--wrap" data-flip aria-label="Otvori razglednicu za paket: druga prilika">
+          <span class="twine twine--v" aria-hidden="true"></span>
+          <span class="twine twine--h" aria-hidden="true"></span>
+          <svg class="bow" viewBox="0 0 104 66" fill="none" stroke="#E7DBBE" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M52 30C30 6 8 16 16 32c6 12 26 8 36-2Z"/><path d="M52 30c22-24 44-14 36 2-6 12-26 8-36-2Z"/><path d="M52 31c-5 14-16 22-30 29"/><path d="M52 31c6 14 18 21 32 26"/></svg>
+          <span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#FFF1EA" stroke-width="1.6" stroke-linejoin="round"><path d="M12 7c-2.4-2-5-2.4-8-2v11c3-.4 5.6 0 8 2 2.4-2 5-2.4 8-2V5c-3-.4-5.6 0-8 2Z"/><path d="M12 7v11"/></svg></span>
+          <span class="uvez">Meki uvez</span>
+          <span class="wrap__title">Spoj naslijepo</span>
+          <span class="parcel__price">18 €</span>
+          <span class="wrap__list">druga prilika<br>pisma<br>plakat ćeš</span>
+          <svg class="doodle" viewBox="0 0 60 46" fill="none" stroke="#4A3220" stroke-width="1" stroke-linecap="round" aria-hidden="true"><path d="M14 45c-4-10-4-20 1-28"/><path d="M15 24c-6-2-9-7-9-12 6 0 10 4 9 12Z"/><path d="M17 17c4-4 4-10 2-14-4 3-5 9-2 14Z"/><path d="M18 30c6-1 10-5 11-10-6-1-11 3-11 10Z"/><circle cx="24" cy="7" r="3.4"/><path d="M40 45c-2-8 0-13 4-16 4-3 4-8 0-10-3-1.6-6 .4-6 3"/><path d="M44 29c4 1 8-1 9-5"/></svg>
+          <span class="parcel__hint">Dodirni</span>
+        </button>
+        <div class="face face--card">
+          <span class="card__stamp">Razglednica iz knjižare</span>
+          <p class="card__note">Nisam plakala od Normalnih ljudi. Onda sam došla do poglavlja 26 i morala odložiti knjigu na deset minuta. Toliko o meni.</p>
+          <p class="card__sign">Rosa</p>
+          <div class="card__actions">
+            <button class="btn-add" data-add>Zamotaj mi je</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="parcel reveal">
+      <div class="parcel__inner">
+        <button class="face face--wrap" data-flip aria-label="Otvori razglednicu za paket: smiješno">
+          <span class="twine twine--v" aria-hidden="true"></span>
+          <span class="twine twine--h" aria-hidden="true"></span>
+          <svg class="bow" viewBox="0 0 104 66" fill="none" stroke="#E7DBBE" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M52 30C30 6 8 16 16 32c6 12 26 8 36-2Z"/><path d="M52 30c22-24 44-14 36 2-6 12-26 8-36-2Z"/><path d="M52 31c-5 14-16 22-30 29"/><path d="M52 31c6 14 18 21 32 26"/></svg>
+          <span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#FFF1EA" stroke-width="1.6" stroke-linejoin="round"><path d="M12 7c-2.4-2-5-2.4-8-2v11c3-.4 5.6 0 8 2 2.4-2 5-2.4 8-2V5c-3-.4-5.6 0-8 2Z"/><path d="M12 7v11"/></svg></span>
+          <span class="uvez">Meki uvez</span>
+          <span class="wrap__title">Spoj naslijepo</span>
+          <span class="parcel__price">18 €</span>
+          <span class="wrap__list">smiješno<br>bez suza<br>za skeptike</span>
+          <svg class="doodle" viewBox="0 0 60 46" fill="none" stroke="#4A3220" stroke-width="1" stroke-linecap="round" aria-hidden="true"><path d="M14 45c-4-10-4-20 1-28"/><path d="M15 24c-6-2-9-7-9-12 6 0 10 4 9 12Z"/><path d="M17 17c4-4 4-10 2-14-4 3-5 9-2 14Z"/><path d="M18 30c6-1 10-5 11-10-6-1-11 3-11 10Z"/><circle cx="24" cy="7" r="3.4"/><path d="M40 45c-2-8 0-13 4-16 4-3 4-8 0-10-3-1.6-6 .4-6 3"/><path d="M44 29c4 1 8-1 9-5"/></svg>
+          <span class="parcel__hint">Dodirni</span>
+        </button>
+        <div class="face face--card">
+          <span class="card__stamp">Razglednica iz knjižare</span>
+          <p class="card__note">Ovu dajem svima koji kažu da je romansa isprazna. Nitko mi se dosad nije vratio s istim stavom. Smij se naglas, nije sramota.</p>
+          <p class="card__sign">Rosa</p>
+          <div class="card__actions">
+            <button class="btn-add" data-add>Zamotaj mi je</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- DNEVNIK -->
+<section class="section" id="dnevnik">
+  <div class="section__head reveal">
+    <p class="eyebrow">Dnevnik</p>
+    <h2>Što se čita<br>iza pulta.</h2>
+    <p>Kratki zapisi o knjigama koje su prošle kroz ruke, o pakiranju i o tome kako nastaje knjižara koja još nema vrata.</p>
+  </div>
+
+  <div class="zapisi">
+
+    <button class="zapis reveal" data-otvori="zapis-1">
+      <span class="zapis__slika" style="background:linear-gradient(155deg,#B08A5E,#7C5533)">
+        <span class="zapis__oznaka">Dnevnik</span>
+      </span>
+      <p class="zapis__datum">Subota, 29. 8. 2026.</p>
+      <h3>Ako mi odgovore, onda stvarno moram</h3>
+      <p>Knjiga nađena u kuhinji ispod palube, Verina konoba u prizemlju i mail nakladniku koji sam pisala pet puta.</p>
+      <span class="zapis__vise">Pročitaj</span>
+    </button>
+
+    <button class="zapis reveal" data-uskoro>
+      <span class="zapis__slika" style="background:linear-gradient(155deg,#B08A5E,#7C5533)">
+        <span class="zapis__oznaka">Iza kulisa</span>
+      </span>
+      <p class="zapis__datum">Utorak, 4. 8. 2026.</p>
+      <h3>Kako zamotati knjigu da izgleda kao poklon, a ne kao paket</h3>
+      <p>Špaga, pečat i jedna greška koju sam ponavljala prvih pedeset puta. Postupak korak po korak.</p>
+      <span class="zapis__vise">Uskoro</span>
+    </button>
+
+    <button class="zapis reveal" data-uskoro>
+      <span class="zapis__slika" style="background:linear-gradient(155deg,#5E7355,#3C4A36)">
+        <span class="zapis__oznaka">Autorice</span>
+      </span>
+      <p class="zapis__datum">Ponedjeljak, 27. 7. 2026.</p>
+      <h3>Julie Caplin i knjiga koja se događa na našoj obali</h3>
+      <p>Cijeli serijal Romantičnih bjegova ima jednu knjigu smještenu na Jadranu. Vrijedi li čitati redom?</p>
+      <span class="zapis__vise">Uskoro</span>
+    </button>
+
+  </div>
+</section>
+
+<!-- PISMA -->
+<section class="section" id="pisma">
+  <div class="post reveal">
+    <p class="eyebrow">Pisma</p>
+    <h2>Jednom mjesečno,<br>jedno pismo.</h2>
+    <p>Što smo čitale, što stiže na police i kad napokon nađemo prostor s dovoljno svjetla.</p>
+    <div class="post__form">
+      <label for="mail" style="position:absolute;left:-9999px">Tvoja e-mail adresa</label>
+      <input id="mail" type="email" placeholder="tvoja@adresa.hr" autocomplete="email">
+      <button id="send">Pošalji mi pismo</button>
+    </div>
+    <p class="post__ok" id="ok" role="status"></p>
+  </div>
+</section>
+
+<!-- PISMO -->
+<section class="section letter-section" id="pismo">
+  <div class="letter reveal">
+    <p class="eyebrow">Od nas</p>
+    <h2>Ovo je knjižara koja još nema vrata.</h2>
+    <p>Jednom sam ušla u knjižaru sa staklenim krovom. U košari kraj ulaza stajale su knjige zamotane u smeđi papir, a na svakoj je bila razglednica na kojoj je netko rukom napisao zašto mu se ta knjiga svidjela. Kupila sam dvije. Nijednu nisam birala.</p>
+    <p>Takvu knjižaru želim otvoriti. Za sada je ovdje, na ekranu, i šaljem je poštom. Ali papir, špaga i razglednica su isti.</p>
+    <p class="signoff">Dora</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot__in">
+    <div>
+      <p style="font-family:var(--display);font-size:1.3rem;color:var(--ink)">Romantična knjižara</p>
+      <p>Zamatamo utorkom i petkom.</p>
+      <p>Pišite nam: pozdrav@romanticnaknjizara.hr</p>
+    </div>
+    <nav class="foot__links" aria-label="Podnožje">
+      <a href="#spoj">Spoj naslijepo</a>
+      <a href="#police">Police</a>
+      <a href="#dnevnik">Dnevnik</a>
+      <a href="#pismo">O knjižari</a>
+      <a href="#">Dostava i povrat</a>
+      <a href="#">Uvjeti kupnje</a>
+    </nav>
+    <div>
+      <svg width="34" viewBox="0 0 40 64" fill="none" stroke="#6E3B50" stroke-width="1.1" opacity=".6" aria-hidden="true">
+        <path d="M20 64V10"/><path d="M20 44c-8 0-12-5-12-11 7 0 12 4 12 11Z"/>
+        <path d="M20 34c8 0 12-5 12-11-7 0-12 4-12 11Z"/>
+        <circle cx="20" cy="7" r="4.4"/>
+      </svg>
+    </div>
+  </div>
+</footer>
+
+
+<div class="citanje" id="citanje" role="dialog" aria-modal="true" aria-labelledby="citanje-naslov">
+  <button class="citanje__zatvori" id="zatvori-citanje" aria-label="Zatvori">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div class="citanje__in">
+    <h2 id="citanje-naslov">Ako mi odgovore, onda stvarno moram</h2>
+    <p class="citanje__datum">Subota, 29. 8. 2026.</p>
+    <p>Jutros sam prala palubu na jahti koja sutra ide gore prema Italiji i u kuhinji ispod palube našla knjigu. Nitko je nije tražio. Rekli su mi neka je uzmem.</p><p>Tajnovita uvala u Hrvatskoj, Julie Caplin.</p><p>Maddie radi na jahti. Sprema tuđe kabine, pere tuđe čaše i cijelo ljeto krsari ovom obalom. Nick je gore na palubi jer je netko drugi platio. Prvih sto stranica se ne podnose i oboje misle da imaju pravo.</p><p>Ja sam do jedanaest ribala palubu, a onda čitala kako netko od te iste palube pravi ljeto života.</p><p>I onda mi je sinulo da bi to netko odavde trebao napisati. Pa da se ja ne bih usudila. Pa da bi valjda išlo pod nekim drugim imenom.</p><p>Zato ovo pišem. Nisam pisala dnevnik od dvanaeste. Onaj stari je u kutiji ispod kreveta i pola je o tome tko me nije zvao na rođendan.</p><p>Poslova još ima. Šime zove za brodove, apartmani se prazne pa treba čistiti, konoba će me tražiti za vikend. Ali nije više kao u srpnju, kad ti se dan slijepi u jedan komad i ne znaš je li utorak.</p><p>Popodne sam prebrojala što sam skupila i prvi put nisam odmah zatvorila bilježnicu.</p><p>Ima dovoljno. Ne puno, ali dovoljno da probam.</p><p>To sam rekla naglas, u praznoj kuhinji, kao luđakinja.</p><p>A imam i gdje. Vera mi u srijedu, dok smo skupljale rublje, rekla neka uzmem njezinu konobu u prizemlju. Stoji prazna otkad je muž umro, ulaz je iz dvorišta i traži toliko malo da mi je bilo neugodno pitati koliko točno.</p><p>Bila sam unutra dvaput. Kamen, nisko, jedna žarulja na kabelu i onaj miris koji ti se uhvati za jaknu. Ali ima dubinu, i uza zid stane više nego što izgleda.</p><p>Mama je zvala u sedam.</p><p>&bdquo;Ujak kaže da još drže ono mjesto.&ldquo;</p><p>&bdquo;Znam.&ldquo;</p><p>&bdquo;Samo velim. Ondje ti je sve sigurno, Rosa. I božićnica.&ldquo;</p><p>Nisam se svađala, nema smisla. Ona zapravo i ne govori o uredu. Govori o tome da će me netko negdje čuvati, a ja joj to ne mogu obećati.</p><p>Onda je pitala kanim li stvarno prodavati knjige iz podruma. Ja to zovem konoba, ona zove podrum, i mislim da je to cijela razlika među nama.</p><p>Poslije sam sat vremena pisala jedan mail.</p><p>Nakladniku. Pitala sam pod kojim uvjetima rade s malim knjižarama i može li se početi s malom količinom. Pisala sam ga pet puta. U prvoj verziji sam se ispričavala tri puta prije nego sam rekla što hoću.</p><p>Na kraju sam obrisala sve što je zvučalo kao molba i ostavila četiri rečenice.</p><p>Poslala u dvadeset do dvanaest. Subota je, dakle ništa do ponedjeljka.</p><p>Ako ovo ikad netko pročita, neka zna da mi je kraj kolovoza najdraže doba godine. More je toplo, ulice su prazne i navečer se čuje kad netko zatvori vrata na drugom kraju rive.</p><p>To se ovdje ne govori naglas. Svi kažu kako im je najgore kad sve stane, pa i ja klimam glavom.</p><p>Pisat ću onda. Ne znam koliko će mi se dati, i sumnjam da će ovo itko ikad čitati.</p><p>Sutra ujutro idem po ključ. Vera kaže da ću trebati odvlaživač i da to nije šala.</p><p>Izmjerila sam večeras u glavi koliko polica stane uza zid. Ispalo je pet.</p><p>Pet polica, jedna žarulja i osam mjeseci u kojima nemam pojma što radim.</p>
+    <p class="citanje__potpis">Rosa</p>
+  </div>
+</div>
+
+<div class="toast" id="toast">Zamotano. ✂</div>
+
+<script>
+// flip parcels
+document.querySelectorAll('[data-flip]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    btn.closest('.parcel').classList.toggle('is-open');
+  });
+});
+
+// klik po otvorenoj kartici je zatvara, osim na gumbu
+document.querySelectorAll('.face--card').forEach(function(kartica){
+  kartica.addEventListener('click', function(e){
+    if(e.target.closest('[data-add]')) return;
+    kartica.closest('.parcel').classList.remove('is-open');
+  });
+});
+
+// ---------------------------------------------------------------
+// ZALIHA: jedno mjesto za sve knjige.
+// Dodaj knjigu = dodaj jedan objekt. Boje hrbata: vidi PALETA.
+// napomena = tvoja rečenica, ide na razglednicu. Nemoj kopirati
+// opise nakladnika, to je tuđi tekst i tuđi glas.
+//
+// hrbatSlika:'slike/hrbati/prag.jpg'  -> fotografija pravog hrbata
+//    zamjenjuje boju i tekst, knjiga na polici izgleda točno kao u ruci.
+//    Izreži traku, širina oko 120px, visina oko 900px.
+// ---------------------------------------------------------------
+var PALETA = ['#6E3B50','#8B4A3C','#3E4F63','#A87C55','#6F7F66','#513A55','#95523F','#7A3B47','#4A4459','#BE9A48'];
+
+var POLICE = [
+  {
+    naziv:'Mrzim te, pa ipak',
+    knjige:[
+      {naslov:'Kralj gnjeva', autor:'Ana Huang, Egmont', cijena:17.99, boja:'#6E3B50', visina:206,
+       napomena:'Ugovoreni brak, muškarac koji je hladan iz principa. Prva u serijalu Kraljevi grijeha i najbolja ulazna točka ako još nisi čitala Huang.'},
+      {naslov:'Mračna mržnja', autor:'Ana Huang, Egmont', cijena:17.99, boja:'#8B4A3C', visina:190,
+       napomena:'Lažna veza između dvoje ljudi koji se stvarno ne podnose. Točno ono što piše na etiketi i ni gram manje.'},
+      {naslov:'Ljubavna hipoteza', autor:'Ali Hazelwood, Sonatina', cijena:18.00, boja:'#3E4F63', visina:220,
+       napomena:'Znanstvenica koja sve analizira osim vlastitih osjećaja. Najmekša knjiga na ovoj polici. Počni ovdje ako ti je dark previše.'},
+      {naslov:'Kralj oholosti', autor:'Ana Huang, Egmont', cijena:17.99, boja:'#A87C55', visina:178,
+       napomena:'Druga u serijalu. Suzdržaniji je od prve, ali napetost drži duže.'}
+    ]
+  },
+  {
+    naziv:'Zamršeno, i to namjerno',
+    knjige:[
+      {naslov:'Mračna ljubav', autor:'Ana Huang, Egmont', cijena:17.99, boja:'#513A55', visina:212,
+       napomena:'Sestra najboljeg prijatelja. Knjiga koja je pola BookToka uvela u žanr, i dalje drži.'},
+      {naslov:'Mračne igre', autor:'Ana Huang, Egmont', cijena:17.99, boja:'#7A3B47', visina:186,
+       napomena:'Tjelohranitelj i princeza. Znaš kamo ide, ali put je bolji nego što očekuješ.'},
+      {naslov:'Mračne laži', autor:'Ana Huang, Egmont', cijena:17.99, boja:'#4A4459', visina:198,
+       napomena:'Najmračnija u serijalu. Provjeri upozorenja na sadržaj prije nego kreneš.'}
+    ]
+  },
+  {
+    naziv:'Uz čitanje',
+    knjige:[
+      {naslov:'Ljestve za biblioteku', autor:'Hrast, uljeno finiširano', cijena:189.00, boja:'#8A6440', visina:214,
+       napomena:'Klizne, na mjedenoj šipci. Skupe su i znam to, ali ovo je predmet koji kupiš jednom u životu.'},
+      {naslov:'Brojač pročitanih knjiga', autor:'Mjed i emajl', cijena:24.00, boja:'#6F7F66', visina:172,
+       napomena:'Okreneš kotačić svaki put kad zatvoriš knjigu. Opasno je zabavno.'},
+      {naslov:'Noćna lampa s prigušivačem', autor:'Staklo i mjed', cijena:62.00, boja:'#BE9A48', visina:196, tamnoSlovo:true,
+       napomena:'Toplo svjetlo, bez plave nijanse. Za one koji čitaju dok drugi spava.'},
+      {naslov:'Držač za cvijeće među knjigama', autor:'Keramika', cijena:18.00, boja:'#B0698A', visina:160,
+       napomena:'Uska epruveta koja stane između knjiga na polici. Jedna grančica i polica živi.'},
+      {naslov:'Bookmarkeri, set od šest', autor:'Tisak na kartonu', cijena:9.00, boja:'#3E4F63', visina:184,
+       napomena:'Naši, tiskani u Zagrebu. Jedan ide uz svaku narudžbu besplatno.'}
+    ]
+  },
+  {
+    naziv:'Romantični bjegovi Julie Caplin',
+    knjige:[
+      {naslov:'Savršeni kutak u Pragu', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
+       cijena:16.80, stara:21.00, boja:'#E6E0EC', tamnoSlovo:true, visina:236,
+       slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2025/09/Savrseni-kutak-u-Pragu-MU-1-652x1000.jpg',
+       napomena:'Cimeri koji se poznaju od prije, i Prag pod snijegom. Najnovija prevedena, drži je sprijeda.'},
+      {naslov:'Mali hotel u Portugalu', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
+       cijena:18.32, stara:22.90, boja:'#DCEAE6', tamnoSlovo:true, visina:228,
+       hrbatSlika:'slike/hrbati/portugal.jpg',
+       slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2026/05/Mali-hotel-u-Portugalu-3D-675x1000.png',
+       napomena:'Izlazi u lipnju 2026. Algarve, hotel uz more. Ovu naručuješ u pretprodaji.'},
+      {naslov:'Mala skijaška koliba u Švicarskoj', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
+       cijena:14.45, stara:19.01, boja:'#E0E9F1', tamnoSlovo:true, visina:244,
+       slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2024/08/Mala-skijaska-koliba-652x1000.jpg',
+       napomena:'Snijeg, planina, jedna soba manje nego što je trebalo.'},
+      {naslov:'Vila s pogledom', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
+       cijena:12.95, stara:18.50, boja:'#F3E7D6', tamnoSlovo:true, visina:222,
+       hrbatSlika:'slike/hrbati/vila-s-pogledom.jpg',
+       slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2024/05/Vila-s-pogledom-MU-657x1000.jpg',
+       napomena:'Amalfi, ružičasta vila i otac za kojeg nije znala da postoji. Ljetna knjiga u punom smislu.'},
+      {naslov:'Francuski dvorac iz snova', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
+       cijena:14.80, stara:18.50, boja:'#F0E2E4', tamnoSlovo:true, visina:232,
+       hrbatSlika:'slike/hrbati/francuski-dvorac.jpg',
+       slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2024/06/Francuski-dvorac-iz-snova-1-652x1000.jpg',
+       napomena:'Champagne, dvorac i ljeto koje popravi više nego što je planirala.'},
+      {naslov:'Čarobni dvorac u Škotskoj', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
+       cijena:12.95, stara:18.50, boja:'#E2E7DE', tamnoSlovo:true, visina:218,
+       hrbatSlika:'slike/hrbati/skotska.jpg',
+       slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2023/10/Screenshot_20231026-114231_Adobe-Acrobat-667x1000.jpg',
+       napomena:'Izzy naslijedi dvorac u škotskom gorju i pokuša ga do Božića pretvoriti u mali hotel. Susjed koji piše trilere i majka koja se pojavi bez najave rade joj više problema od krova. Zimska, a nije zaslađena.'},
+      {naslov:'Mala pekarnica u Brooklynu', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
+       cijena:12.95, stara:18.50, boja:'#EFE6D0', tamnoSlovo:true, visina:240,
+       hrbatSlika:'slike/hrbati/brooklyn.jpg',
+       slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2022/12/mala-pekarnica-u-brooklynu.jpg',
+       napomena:'Sophie dolazi u New York pisati o hrani i zaliječiti prekid, a ispod stana joj je pekarnica zbog koje sve drugo čeka. Kolega s kojim se stalno sudara je točno tip muškarca kojeg je odlučila zaobići. Najgladnija knjiga u serijalu.'},
+      {naslov:'Mala slastičarnica u Parizu', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
+       cijena:15.79, boja:'#EFE1E6', tamnoSlovo:true, visina:226,
+       slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2022/08/Mala-slasticarnica-MU.jpg',
+       napomena:'Nina pobjegne od obiteljskih očekivanja u pariški slastičarski pult i tamo naleti na najboljeg bratovog prijatelja, u kojeg je potajno zaljubljena godinama. Ako voliš tu zaljubljenost koja se skriva, počni ovdje.'}
+    ]
+  },
+  {
+    naziv:'Spakiraj i idi',
+    knjige:[
+      {naslov:'Ljubavno pismo Parizu', autor:'Rebecca Raisin, Koncept', hrbatAutor:'Rebecca Raisin',
+       cijena:18.32, stara:22.90, boja:'#E0E9F1', tamnoSlovo:true, visina:234,
+       hrbatSlika:'slike/hrbati/pismo-parizu.jpg',
+       slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2026/02/Ljubavno-pismo-Parizu-3D-Right-1-638x1000.png',
+       napomena:'Lilou prodaje knjige na pariškoj buvljoj tržnici i potajno spaja tuđe parove pod imenom Pariški Kupid. Onda njoj stigne pismo bez potpisa, od nekoga tko zna za to. Junakinja je knjižarka, pa ova ide u izlog.'},
+      {naslov:'Mali dućan u Cockleberry Bayu', autor:'Nicola May, V.B.Z.', hrbatAutor:'Nicola May',
+       cijena:9.42, stara:17.12, boja:'#E2E7DE', tamnoSlovo:true, visina:238,
+       hrbatSlika:'slike/hrbati/cockleberry.jpg',
+       slika:'https://www.ljevak.hr/Documents/Products/171763/32099.jpg',
+       napomena:'Rosa Larkin naslijedi prazan dućan u engleskom primorskom selu i ne smije ga prodati, nego mora naći nekoga tko ga zaslužuje. Ostavi London, dođe s jazavčarom i počne ispočetka. Junakinja se zove Rosa, kao i ona koja vodi naš dnevnik.'}
+    ]
+  },
+  {
+    naziv:'Plakat ćeš, i to je u redu',
+    knjige:[
+      {naslov:'Kralj pohlepe', autor:'Ana Huang, Egmont', cijena:17.99, boja:'#6E3B50', visina:204,
+       napomena:'Brak koji se raspada i dvoje ljudi koji pokušavaju natrag. Druga prilika, napisana bez prečaca.'},
+      {naslov:'Kralj zavisti', autor:'Ana Huang, Egmont', cijena:17.99, boja:'#6F7F66', visina:192,
+       napomena:'Peta u serijalu, čita se i samostalno. Sporija je i tiša od ostalih.'},
+      {naslov:'Tajnovita uvala u Hrvatskoj', autor:'Julie Caplin, Koncept', cijena:13.14, boja:'#3E7A83', visina:180,
+       napomena:'Jedina iz serijala smještena kod nas: jahta, Jadran i muškarac koji na prvu ide na živce. Ovu prodaješ turistima i domaćima podjednako.'}
+    ]
+  }
+];
+
+// stvari koje stoje među knjigama, crtane linijom
+var STVARI = {
+  // vaza u obliku knjige, prava fotografija izrezana na bijelo
+  biljka:
+    '<span class="stvar" aria-hidden="true">' +
+    '<img class="stvar__foto" src="slike/vaza-kroz-ogledalo.png" alt=""></span>',
+  okvir:
+    '<span class="stvar" aria-hidden="true">' +
+    '<svg width="58" height="70" viewBox="0 0 58 70" fill="none" stroke="#8A6B4E" stroke-width="1.15" stroke-linejoin="round">' +
+      '<rect x="6" y="10" width="46" height="52" rx="2" fill="#EFE4DC"/>' +
+      '<rect x="11" y="15" width="36" height="42" rx="1" fill="#DCC9BE"/>' +
+      '<path d="M11 48l10-11 7 8 6-6 13 14v4H11Z" fill="#B9A08F" stroke="none"/>' +
+      '<circle cx="37" cy="26" r="4" stroke="#9C8271"/>' +
+    '</svg></span>',
+  svijeca:
+    '<span class="stvar" aria-hidden="true">' +
+    '<svg width="34" height="62" viewBox="0 0 34 62" fill="none" stroke="#8A6B4E" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">' +
+      '<rect x="8" y="18" width="18" height="42" rx="2" fill="#F1E6D6"/>' +
+      '<path d="M8 26h18"/>' +
+      '<path d="M17 18v-5"/>' +
+      '<path d="M17 12c2.6-2.4 2.6-5.6 0-8-2.6 2.4-2.6 5.6 0 8Z" stroke="#BE9A48"/>' +
+    '</svg></span>',
+  salica:
+    '<span class="stvar" aria-hidden="true">' +
+    '<svg width="52" height="44" viewBox="0 0 52 44" fill="none" stroke="#8A6B4E" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M8 18h28v12a10 10 0 0 1-10 10h-8a10 10 0 0 1-10-10Z" fill="#F1E6D6"/>' +
+      '<path d="M36 22h4a5 5 0 0 1 0 10h-4"/>' +
+      '<path d="M6 42h34"/>' +
+      '<path d="M18 12c1.8-2 1.8-4 0-6M26 12c1.8-2 1.8-4 0-6" stroke="#C4B0A2"/>' +
+    '</svg></span>'
+};
+
+// render
+(function(){
+  var wrap = document.getElementById('shelves');
+  if(!wrap) return;
+
+  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+
+  POLICE.forEach(function(polica, pi){
+    var el = document.createElement('div');
+    el.className = 'shelf reveal';
+    var tijelo;
+
+    if(polica.prikaz === 'naslovnice'){
+      // lice prema van: prava naslovnica ako postoji, inače tipografska
+      var karte = polica.knjige.map(function(k, ki){
+        var art = k.slika
+          ? '<img src="' + esc(k.slika) + '" alt="Naslovnica: ' + esc(k.naslov) + '" loading="lazy">'
+          : '<p class="cover__autor">' + esc(k.autor) + '</p>' +
+            '<p class="cover__naslov">' + esc(k.naslov) + '</p>';
+        return '<button class="cover" data-shelf="' + pi + '" data-book="' + ki + '">' +
+                 '<span class="cover__art" style="background:' + k.boja + '">' + art + '</span>' +
+                 '<span class="cover__meta">' +
+                   '<span class="cover__t">' + esc(k.naslov) + '</span>' +
+                   '<span class="cover__c">' + k.cijena.toFixed(2).replace('.', ',') + ' €</span>' +
+                 '</span>' +
+               '</button>';
+      }).join('');
+      tijelo = '<div class="covers">' + karte + '</div>';
+    } else {
+      var spines = polica.knjige.map(function(k, ki){
+        var boja  = k.boja || PALETA[ki % PALETA.length];
+        var slovo = k.tamnoSlovo ? ';color:#3B2A16' : '';
+        if(k.hrbatSlika){
+          return '<button class="spine spine--foto" style="height:' + (k.visina || 195) + 'px;' +
+                 'background-image:url(' + k.hrbatSlika + ')" ' +
+                 'data-shelf="' + pi + '" data-book="' + ki + '">' +
+                 '<span class="vizualno-skriveno">' + esc(k.naslov) + '</span></button>';
+        }
+        var sadrzaj = k.hrbatAutor
+          ? '<span class="spine__autor">' + esc(k.hrbatAutor) + '</span>' +
+            '<span class="spine__naslov">' + esc(k.naslov) + '</span>'
+          : '<span class="spine__naslov">' + esc(k.naslov) + '</span>';
+        return '<button class="spine" style="background:' + boja + ';height:' + (k.visina || 195) + 'px' + slovo +
+               '" data-shelf="' + pi + '" data-book="' + ki + '">' + sadrzaj + '</button>';
+      });
+
+      // predmeti se ubacuju među knjige, na stalna mjesta po polici
+      var stvari = [STVARI.biljka, STVARI.okvir, STVARI.svijeca, STVARI.salica];
+      var umetni = [3, 7];
+      umetni.reverse().forEach(function(poz, n){
+        if(spines.length > poz){
+          spines.splice(poz, 0, stvari[(pi + n) % stvari.length]);
+        }
+      });
+      spines = spines.join('');
+      tijelo = '<div class="books">' + spines + '</div><div class="ledge"></div>';
+    }
+
+    el.innerHTML =
+      '<div class="shelf__head">' +
+        '<span class="shelf__label">' + polica.naziv + '</span>' +
+        '<span class="arrows">' +
+          '<button class="arrow" data-smjer="-1" aria-label="Prethodne knjige">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5 8 12l7 7"/></svg>' +
+          '</button>' +
+          '<button class="arrow" data-smjer="1" aria-label="Sljedeće knjige">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>' +
+          '</button>' +
+        '</span>' +
+      '</div>' +
+      tijelo +
+      '<div class="track"><span class="track__thumb"></span></div>' +
+      '<div class="detail" role="region" aria-live="polite"></div>';
+    wrap.appendChild(el);
+  });
+})();
+
+// strelice i traka napretka za svaku policu
+(function(){
+  document.querySelectorAll('.shelf').forEach(function(shelf){
+    var red   = shelf.querySelector('.books, .covers');
+    var track = shelf.querySelector('.track');
+    var thumb = shelf.querySelector('.track__thumb');
+    var lijevo  = shelf.querySelector('[data-smjer="-1"]');
+    var desno   = shelf.querySelector('[data-smjer="1"]');
+    if(!red) return;
+
+    function osvjezi(){
+      var visak = red.scrollWidth - red.clientWidth;
+      if(visak < 8){
+        track.classList.add('is-hidden');
+        shelf.querySelector('.arrows').style.display = 'none';
+        return;
+      }
+      var udio = red.clientWidth / red.scrollWidth;
+      var poz  = red.scrollLeft / visak;
+      thumb.style.width = (udio * 100) + '%';
+      thumb.style.left  = (poz * (100 - udio * 100)) + '%';
+      lijevo.disabled = red.scrollLeft < 4;
+      desno.disabled  = red.scrollLeft > visak - 4;
+    }
+
+    [lijevo, desno].forEach(function(b){
+      b.addEventListener('click', function(){
+        red.scrollBy({left: Number(b.dataset.smjer) * red.clientWidth * 0.8, behavior:'smooth'});
+      });
+    });
+
+    red.addEventListener('scroll', osvjezi, {passive:true});
+    window.addEventListener('resize', osvjezi);
+    osvjezi();
+    setTimeout(osvjezi, 400);
+  });
+})();
+
+// otvori detalj knjige
+document.getElementById('shelves').addEventListener('click', function(e){
+  var spine = e.target.closest('.spine, .cover');
+  if(!spine) return;
+  var k = POLICE[spine.dataset.shelf].knjige[spine.dataset.book];
+  var box = spine.closest('.shelf').querySelector('.detail');
+  var isSame = box.dataset.open === spine.dataset.book && box.classList.contains('is-on');
+  if(isSame){ box.classList.remove('is-on'); return; }
+  box.dataset.open = spine.dataset.book;
+  var korice = k.slika
+    ? '<span class="detail__korice"><img src="' + k.slika + '" alt="Naslovnica: ' + k.naslov + '" loading="lazy"></span>'
+    : '';
+  box.innerHTML =
+    korice +
+    '<div>' +
+      '<p class="detail__title">' + k.naslov + '</p>' +
+      '<p class="detail__author">' + k.autor + '</p>' +
+      '<p class="detail__note">' + k.napomena + '</p>' +
+    '</div>' +
+    '<div class="detail__side">' +
+      '<span class="detail__price">' + k.cijena.toFixed(2).replace('.', ',') + ' €' +
+        // stara cijena se ispisuje samo ako je knjiga snižena
+        (k.stara ? '<span class="detail__stara">' + k.stara.toFixed(2).replace('.', ',') + ' €</span>' : '') +
+      '</span>' +
+      '<button class="btn-add" data-add>Zamotaj mi je</button>' +
+    '</div>';
+  box.classList.add('is-on');
+});
+
+// basket
+var count = 0;
+var basketEl = document.getElementById('basket');
+function osvjeziKosaricu(){
+  basketEl.textContent = count ? 'Košarica (' + count + ')' : 'Košarica';
+}
+var toast = document.getElementById('toast');
+var timer;
+function ping(msg){
+  toast.textContent = msg;
+  toast.classList.add('is-on');
+  clearTimeout(timer);
+  timer = setTimeout(function(){ toast.classList.remove('is-on'); }, 2200);
+}
+document.addEventListener('click', function(e){
+  if(!e.target.closest('[data-add]')) return;
+  count++; osvjeziKosaricu();
+  ping('Zamotano. ✂');
+});
+
+document.getElementById('basket').addEventListener('click', function(){
+  ping(count ? 'U košari: ' + count : 'Košara je još prazna.');
+});
+
+// newsletter
+document.getElementById('send').addEventListener('click', function(){
+  var v = document.getElementById('mail').value.trim();
+  document.getElementById('ok').textContent =
+    v.includes('@') ? 'Zapisano. Pismo stiže prvog u mjesecu.' : 'Treba nam e-mail adresa.';
+});
+
+// hero sekvenca: pročelje -> vrata
+(function(){
+  var hero  = document.getElementById('hero');
+  if(!hero) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var stage = hero.querySelector('.hero__stage');
+  var a     = hero.querySelector('.layer-a');
+  var b     = hero.querySelector('.layer-b');
+  var veil  = hero.querySelector('.hero__veil');
+  var copy  = hero.querySelector('.hero__in');
+  var tick  = false;
+
+  // 0 -> 1 preko dijela stranice u kojem je hero "zalijepljen"
+  function span(p, from, to){
+    return Math.max(0, Math.min(1, (p - from) / (to - from)));
+  }
+
+  function frame(){
+    var raspon = hero.offsetHeight - stage.offsetHeight;
+    var p = raspon > 0 ? Math.max(0, Math.min(1, window.scrollY / raspon)) : 0;
+
+    var prijelaz = span(p, .28, .66);   // pretapanje pročelja u vrata
+
+    a.style.transform = 'scale(' + (1 + p * .22) + ')';
+    a.style.opacity   = 1 - prijelaz;
+
+    b.style.transform = 'scale(' + (1.14 - prijelaz * .14) + ')';
+    b.style.opacity   = prijelaz;
+
+    veil.style.opacity = 1 - span(p, .30, .72) * .68;
+
+    var odlazakTeksta = span(p, .12, .40);
+    copy.style.opacity   = 1 - odlazakTeksta;
+    copy.style.transform = 'translateY(' + (-odlazakTeksta * 48) + 'px)';
+
+    tick = false;
+  }
+
+  window.addEventListener('scroll', function(){
+    if(!tick){ requestAnimationFrame(frame); tick = true; }
+  }, {passive:true});
+  window.addEventListener('resize', frame);
+  frame();
+})();
+
+// otvaranje zapisa
+(function(){
+  var pogled  = document.getElementById('citanje');
+  var zatvori = document.getElementById('zatvori-citanje');
+  if(!pogled) return;
+  function stanje(otvoren){
+    pogled.classList.toggle('is-on', otvoren);
+    document.body.style.overflow = otvoren ? 'hidden' : '';
+    if(otvoren) pogled.scrollTop = 0;
+  }
+  document.querySelectorAll('[data-otvori]').forEach(function(b){
+    b.addEventListener('click', function(){ stanje(true); });
+  });
+  zatvori.addEventListener('click', function(){ stanje(false); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') stanje(false);
+  });
+  document.querySelectorAll('[data-uskoro]').forEach(function(b){
+    b.addEventListener('click', function(){ ping('Ovaj zapis još nije objavljen.'); });
+  });
+})();
+
+// reveal on scroll
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }
+  });
+}, {threshold:.14});
+document.querySelectorAll('.reveal').forEach(function(el, i){
+  el.style.transitionDelay = (i % 3) * 90 + 'ms';
+  io.observe(el);
+});
+</script>
+</body>
+</html>
