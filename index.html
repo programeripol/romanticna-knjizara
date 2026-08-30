@@ -519,11 +519,14 @@ body::after{
 /* stvari koje ljudi drže među knjigama */
 .stvar{
   flex:0 0 auto;align-self:flex-end;
-  pointer-events:none;
-  margin:0 2px;
+  background:none;border:0;padding:0 4px;margin:0;cursor:pointer;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1);
 }
-.stvar svg{display:block}
-.stvar__foto{display:block;height:104px;width:auto}
+.stvar:hover,.stvar:focus-visible{transform:translateY(-12px)}
+.stvar__foto{
+  display:block;width:auto;
+  filter:drop-shadow(0 12px 14px rgba(55,38,46,.36));
+}
 
 /* zaglavlje police: naziv + strelice */
 .shelf__head{
@@ -1285,97 +1288,74 @@ var POLICE = [
        boja:'#3E7A83', visina:180,
        napomena:'Jedina iz serijala smještena kod nas: jahta, Jadran i muškarac koji na prvu ide na živce. Ovu prodaješ turistima i domaćima podjednako.'}
     ]
-  },
-  {
-    naziv:'Uz čitanje',
-    prikaz:'naslovnice',
-    knjige:[
-      {naslov:'Brojač pročitanih knjiga, zeleni', autor:'Drvo, ručno oslikano',
-       slug:'brojac-procitanih-knjiga-zeleni', vrsta:'dodatak', cijena:10.00, boja:'#8FA083',
-       visina:190, dostupno:true,
-       slika:'slike/dodaci/brojac-zeleni.png',
-       napomena:'Okreneš znamenku svaki put kad zatvoriš knjigu. Stoji na polici i tiho te podsjeća koliko si ove godine zapravo pročitala.',
-       opis:['Drvena knjižara u boji žalfije, s tri okretne znamenke u izlogu. Postaviš je na policu u siječnju i cijelu godinu okrećeš brojku svaki put kad zatvoriš knjigu.', 'Na trijemu spava mačka, uz vrata stoji klupica i lampion. Sitnica koja stoji na mjestu i tiho vodi računicu umjesto tebe.']},
-      {naslov:'Brojač pročitanih knjiga, rozi', autor:'Drvo, ručno oslikano',
-       slug:'brojac-procitanih-knjiga-rozi', vrsta:'dodatak', cijena:10.00, boja:'#E2C3C0',
-       visina:190, dostupno:true,
-       slika:'slike/dodaci/brojac-rozi.png',
-       napomena:'Isti brojač, ali u ružičastoj knjižari s tendom i natpisom Bookshop. Ovaj biram kad mi je polica pretjerano zelena.',
-       opis:['Isti brojač, druga knjižara. Ova ima ružičastu tendu na pruge, ružu uz dovratnik i natpis Bookshop na visećoj ploči.', 'U izlogu stoje tri kartice s brojkama, a ispred je stolić za dvoje i ploča na kojoj piše One More Chapter. Biram je kad mi je polica pretjerano zelena.']},
-      {naslov:'Tegla za biljku, Just a girl who loves books', autor:'Keramika i bambus',
-       slug:'tegla-za-biljku-just-a-girl-who-loves-books', vrsta:'dodatak', cijena:10.00,
-       boja:'#E9E4DC', visina:190, dostupno:true,
-       slika:'slike/dodaci/tegla-girl-books.png',
-       napomena:'Za sukulent koji preživi i mene. Natpis je dovoljno jasan da ne moraš ništa objašnjavati onome tko ti dođe u posjet.',
-       opis:['Bijela keramička tegla na bambusovom podnošku, s natpisom koji ne traži objašnjenje. Promjer je taman za sukulent ili mali aloj.', 'Podnožak hvata višak vode pa ti polica ostane suha. Stoji uz knjige, a ne umjesto njih.']},
-      {naslov:'Noćna lampa s tulipanima', autor:'Staklo i drvo', slug:'nocna-lampa-s-tulipanima',
-       vrsta:'dodatak', cijena:10.00, boja:'#E8D6C4', visina:190, dostupno:true,
-       slika:'slike/dodaci/lampa-tulipani.png',
-       napomena:'Tri tulipana koja svijetle ispod staklenog zvona. Dovoljno svjetla za još jedno poglavlje, premalo da nekoga probudi.',
-       opis:['Tri tulipana pod staklenim zvonom, na drvenom postolju. Svjetlo je toplo i prigušeno, bez plave nijanse koja tjera san.', 'Dovoljno da pročitaš još jedno poglavlje, premalo da probudiš onoga tko spava pored tebe. Pali se dodirom postolja.']},
-      {naslov:'Heklani tulipani u vazici', autor:'Pamučna pređa, ručni rad',
-       slug:'heklani-tulipani-u-vazici', vrsta:'dodatak', cijena:10.00, boja:'#EFD9DE', visina:190,
-       dostupno:true,
-       slika:'slike/dodaci/heklani-tulipani.png',
-       napomena:'Heklani, pa ne venu i ne traže vodu. Uz njih ide etiketa koja kaže keep your smile i to je otprilike cijela poanta.',
-       opis:['Pet heklanih tulipana u heklanoj vazici, ručni rad od pamučne pređe. Ne venu, ne traže vodu i preživljavaju selidbe.', 'Uz vazicu ide kožna vrpca i etiketa na kojoj piše keep your smile. Ide uz svaki paket koji šaljem nekome tko slavi nešto.']},
-      {naslov:'Budilnik s dva zvona', autor:'Mjed i staklo', slug:'budilnik-s-dva-zvona',
-       vrsta:'dodatak', cijena:10.00, boja:'#C8A97A', visina:190, dostupno:true,
-       slika:'slike/dodaci/budilnik.png',
-       napomena:'Mjedeni, s dva zvona i pravim kucanjem. Stavi ga preko sobe pa ćeš stvarno ustati, a ne samo obećati da hoćeš.',
-       opis:['Mjedeni budilnik s dva zvona i brojčanikom boje starog papira. Kuca čujno, onako kako budilnici više ne kucaju.', 'Stavi ga preko sobe pa ćeš stvarno ustati, a ne samo obećati da hoćeš. Nema zaslon, nema obavijesti, nema razloga da uzmeš mobitel u ruke prije doručka.']},
-      {naslov:'Vaza u obliku knjige', autor:'Prozirni akril', slug:'vaza-u-obliku-knjige',
-       vrsta:'dodatak', cijena:10.00, boja:'#E4E9EA', visina:190, dostupno:true,
-       slika:'slike/dodaci/vaza-knjiga.png',
-       napomena:'Prozirna vaza koja izgleda kao otvorena knjiga. Tri tulipana i polica odmah izgleda kao izlog.',
-       opis:['Prozirna akrilna vaza oblikovana kao otvorena knjiga, s natpisom Un livre sur les Fleurs. Uska je pa stane između knjiga na polici.', 'Tri tulipana i polica odmah izgleda kao izlog. Puni se s malo vode, jer je plića nego što se čini.']},
-      {naslov:'Tegla u obliku hrpe knjiga', autor:'Keramika', slug:'tegla-u-obliku-hrpe-knjiga',
-       vrsta:'dodatak', cijena:10.00, boja:'#BFDDD6', visina:190, dostupno:true,
-       slika:'slike/dodaci/tegla-hrpa-knjiga.png',
-       napomena:'Tri klasika složena jedan na drugi, a gore stane sukulent. Wuthering Heights, Emma i Little Women, u keramici.',
-       opis:['Keramička tegla oblikovana kao tri složena klasika: Wuthering Heights, Emma i Little Women. Gornja knjiga je otvorena i u nju stane sukulent.', 'Hrptovi su oslikani ružama i pavitom, rukom. Poklon za nekoga tko ima previše knjiga i premalo mjesta.']}
-    ]
   }
 ];
 
-// stvari koje stoje među knjigama, crtane linijom
-var STVARI = {
-  // vaza u obliku knjige, prava fotografija izrezana na bijelo
-  biljka:
-    '<span class="stvar" aria-hidden="true">' +
-    '<img class="stvar__foto" src="slike/vaza-kroz-ogledalo.png" alt=""></span>',
-  okvir:
-    '<span class="stvar" aria-hidden="true">' +
-    '<svg width="58" height="70" viewBox="0 0 58 70" fill="none" stroke="#8A6B4E" stroke-width="1.15" stroke-linejoin="round">' +
-      '<rect x="6" y="10" width="46" height="52" rx="2" fill="#EFE4DC"/>' +
-      '<rect x="11" y="15" width="36" height="42" rx="1" fill="#DCC9BE"/>' +
-      '<path d="M11 48l10-11 7 8 6-6 13 14v4H11Z" fill="#B9A08F" stroke="none"/>' +
-      '<circle cx="37" cy="26" r="4" stroke="#9C8271"/>' +
-    '</svg></span>',
-  svijeca:
-    '<span class="stvar" aria-hidden="true">' +
-    '<svg width="34" height="62" viewBox="0 0 34 62" fill="none" stroke="#8A6B4E" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">' +
-      '<rect x="8" y="18" width="18" height="42" rx="2" fill="#F1E6D6"/>' +
-      '<path d="M8 26h18"/>' +
-      '<path d="M17 18v-5"/>' +
-      '<path d="M17 12c2.6-2.4 2.6-5.6 0-8-2.6 2.4-2.6 5.6 0 8Z" stroke="#BE9A48"/>' +
-    '</svg></span>',
-  salica:
-    '<span class="stvar" aria-hidden="true">' +
-    '<svg width="52" height="44" viewBox="0 0 52 44" fill="none" stroke="#8A6B4E" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">' +
-      '<path d="M8 18h28v12a10 10 0 0 1-10 10h-8a10 10 0 0 1-10-10Z" fill="#F1E6D6"/>' +
-      '<path d="M36 22h4a5 5 0 0 1 0 10h-4"/>' +
-      '<path d="M6 42h34"/>' +
-      '<path d="M18 12c1.8-2 1.8-4 0-6M26 12c1.8-2 1.8-4 0-6" stroke="#C4B0A2"/>' +
-    '</svg></span>'
-};
+// dodaci koji stoje među knjigama, prave fotografije, svaki vodi na svoju stranicu
+var DODACI = [
+  {naslov:'Brojač pročitanih knjiga, zeleni', autor:'Drvo, ručno oslikano',
+   slug:'brojac-procitanih-knjiga-zeleni', vrsta:'dodatak', cijena:10.00, boja:'#8FA083',
+   visina:118, dostupno:true,
+   slika:'slike/dodaci/brojac-zeleni.png',
+   napomena:'Okreneš znamenku svaki put kad zatvoriš knjigu. Stoji na polici i tiho te podsjeća koliko si ove godine zapravo pročitala.',
+   opis:['Drvena knjižara u boji žalfije, s tri okretne znamenke u izlogu. Postaviš je na policu u siječnju i cijelu godinu okrećeš brojku svaki put kad zatvoriš knjigu.', 'Na trijemu spava mačka, uz vrata stoji klupica i lampion. Sitnica koja stoji na mjestu i tiho vodi računicu umjesto tebe.']},
+  {naslov:'Brojač pročitanih knjiga, rozi', autor:'Drvo, ručno oslikano',
+   slug:'brojac-procitanih-knjiga-rozi', vrsta:'dodatak', cijena:10.00, boja:'#E2C3C0',
+   visina:124, dostupno:true,
+   slika:'slike/dodaci/brojac-rozi.png',
+   napomena:'Isti brojač, ali u ružičastoj knjižari s tendom i natpisom Bookshop. Ovaj biram kad mi je polica pretjerano zelena.',
+   opis:['Isti brojač, druga knjižara. Ova ima ružičastu tendu na pruge, ružu uz dovratnik i natpis Bookshop na visećoj ploči.', 'U izlogu stoje tri kartice s brojkama, a ispred je stolić za dvoje i ploča na kojoj piše One More Chapter. Biram je kad mi je polica pretjerano zelena.']},
+  {naslov:'Tegla za biljku, Just a girl who loves books', autor:'Keramika i bambus',
+   slug:'tegla-za-biljku-just-a-girl-who-loves-books', vrsta:'dodatak', cijena:10.00,
+   boja:'#E9E4DC', visina:96, dostupno:true,
+   slika:'slike/dodaci/tegla-girl-books.png',
+   napomena:'Za sukulent koji preživi i mene. Natpis je dovoljno jasan da ne moraš ništa objašnjavati onome tko ti dođe u posjet.',
+   opis:['Bijela keramička tegla na bambusovom podnošku, s natpisom koji ne traži objašnjenje. Promjer je taman za sukulent ili mali aloj.', 'Podnožak hvata višak vode pa ti polica ostane suha. Stoji uz knjige, a ne umjesto njih.']},
+  {naslov:'Noćna lampa s tulipanima', autor:'Staklo i drvo', slug:'nocna-lampa-s-tulipanima',
+   vrsta:'dodatak', cijena:10.00, boja:'#E8D6C4', visina:106, dostupno:true,
+   slika:'slike/dodaci/lampa-tulipani.png',
+   napomena:'Tri tulipana koja svijetle ispod staklenog zvona. Dovoljno svjetla za još jedno poglavlje, premalo da nekoga probudi.',
+   opis:['Tri tulipana pod staklenim zvonom, na drvenom postolju. Svjetlo je toplo i prigušeno, bez plave nijanse koja tjera san.', 'Dovoljno da pročitaš još jedno poglavlje, premalo da probudiš onoga tko spava pored tebe. Pali se dodirom postolja.']},
+  {naslov:'Heklani tulipani u vazici', autor:'Pamučna pređa, ručni rad',
+   slug:'heklani-tulipani-u-vazici', vrsta:'dodatak', cijena:10.00, boja:'#EFD9DE', visina:114,
+   dostupno:true,
+   slika:'slike/dodaci/heklani-tulipani.png',
+   napomena:'Heklani, pa ne venu i ne traže vodu. Uz njih ide etiketa koja kaže keep your smile i to je otprilike cijela poanta.',
+   opis:['Pet heklanih tulipana u heklanoj vazici, ručni rad od pamučne pređe. Ne venu, ne traže vodu i preživljavaju selidbe.', 'Uz vazicu ide kožna vrpca i etiketa na kojoj piše keep your smile. Ide uz svaki paket koji šaljem nekome tko slavi nešto.']},
+  {naslov:'Budilnik s dva zvona', autor:'Mjed i staklo', slug:'budilnik-s-dva-zvona',
+   vrsta:'dodatak', cijena:10.00, boja:'#C8A97A', visina:92, dostupno:true,
+   slika:'slike/dodaci/budilnik.png',
+   napomena:'Mjedeni, s dva zvona i pravim kucanjem. Stavi ga preko sobe pa ćeš stvarno ustati, a ne samo obećati da hoćeš.',
+   opis:['Mjedeni budilnik s dva zvona i brojčanikom boje starog papira. Kuca čujno, onako kako budilnici više ne kucaju.', 'Stavi ga preko sobe pa ćeš stvarno ustati, a ne samo obećati da hoćeš. Nema zaslon, nema obavijesti, nema razloga da uzmeš mobitel u ruke prije doručka.']},
+  {naslov:'Vaza u obliku knjige', autor:'Prozirni akril', slug:'vaza-u-obliku-knjige',
+   vrsta:'dodatak', cijena:10.00, boja:'#E4E9EA', visina:128, dostupno:true,
+   slika:'slike/dodaci/vaza-knjiga.png',
+   napomena:'Prozirna vaza koja izgleda kao otvorena knjiga. Tri tulipana i polica odmah izgleda kao izlog.',
+   opis:['Prozirna akrilna vaza oblikovana kao otvorena knjiga, s natpisom Un livre sur les Fleurs. Uska je pa stane između knjiga na polici.', 'Tri tulipana i polica odmah izgleda kao izlog. Puni se s malo vode, jer je plića nego što se čini.']},
+  {naslov:'Tegla u obliku hrpe knjiga', autor:'Keramika', slug:'tegla-u-obliku-hrpe-knjiga',
+   vrsta:'dodatak', cijena:10.00, boja:'#BFDDD6', visina:72, dostupno:true,
+   slika:'slike/dodaci/tegla-hrpa-knjiga.png',
+   napomena:'Tri klasika složena jedan na drugi, a gore stane sukulent. Wuthering Heights, Emma i Little Women, u keramici.',
+   opis:['Keramička tegla oblikovana kao tri složena klasika: Wuthering Heights, Emma i Little Women. Gornja knjiga je otvorena i u nju stane sukulent.', 'Hrptovi su oslikani ružama i pavitom, rukom. Poklon za nekoga tko ima previše knjiga i premalo mjesta.']}
+];
+
+// escape za tekst koji ide u atribute
+function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
 
 // render
 (function(){
   var wrap = document.getElementById('shelves');
   if(!wrap) return;
 
-  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+
+  // redni broj dodatka za policu pi i mjesto j
+  function redniDodatak(pi, j){
+    var n = 0;
+    for(var i = 0; i < pi; i++){
+      n += Math.floor(DODACI.length / POLICE.length) + (i < (DODACI.length % POLICE.length) ? 1 : 0);
+    }
+    return (n + j) % DODACI.length;
+  }
 
   POLICE.forEach(function(polica, pi){
     var el = document.createElement('div');
@@ -1421,12 +1401,20 @@ var STVARI = {
       });
 
       // predmeti se ubacuju među knjige, na stalna mjesta po polici
-      var stvari = [STVARI.biljka, STVARI.okvir, STVARI.svijeca, STVARI.salica];
-      var umetni = [3, 7];
-      umetni.reverse().forEach(function(poz, n){
-        if(spines.length > poz){
-          spines.splice(poz, 0, stvari[(pi + n) % stvari.length]);
-        }
+      // dodaci se razdijele po policama i stanu izmedu knjiga
+      var koliko = Math.floor(DODACI.length / POLICE.length) + (pi < (DODACI.length % POLICE.length) ? 1 : 0);
+      var mjesta = [];
+      for(var j = 1; j <= koliko; j++){
+        mjesta.push(Math.max(1, Math.round(j * spines.length / (koliko + 1))));
+      }
+      mjesta.reverse().forEach(function(poz, n){
+        var di = redniDodatak(pi, koliko - 1 - n);
+        var d = DODACI[di];
+        spines.splice(poz, 0,
+          '<button class="stvar" data-dodatak="' + di + '">' +
+            '<img class="stvar__foto" src="' + d.slika + '" alt="' + esc(d.naslov) + '" ' +
+                 'style="height:' + d.visina + 'px" loading="lazy">' +
+          '</button>');
       });
       spines = spines.join('');
       tijelo = '<div class="books">' + spines + '</div><div class="ledge"></div>';
@@ -1491,15 +1479,18 @@ var STVARI = {
 
 // otvori detalj knjige
 document.getElementById('shelves').addEventListener('click', function(e){
-  var spine = e.target.closest('.spine, .cover');
+  var spine = e.target.closest('.spine, .cover, .stvar');
   if(!spine) return;
-  var k = POLICE[spine.dataset.shelf].knjige[spine.dataset.book];
+  var jeDodatak = spine.dataset.dodatak !== undefined;
+  var k = jeDodatak ? DODACI[spine.dataset.dodatak]
+                    : POLICE[spine.dataset.shelf].knjige[spine.dataset.book];
+  var kljuc = jeDodatak ? 'd' + spine.dataset.dodatak : spine.dataset.book;
   var box = spine.closest('.shelf').querySelector('.detail');
-  var isSame = box.dataset.open === spine.dataset.book && box.classList.contains('is-on');
+  var isSame = box.dataset.open === kljuc && box.classList.contains('is-on');
   if(isSame){ box.classList.remove('is-on'); return; }
-  box.dataset.open = spine.dataset.book;
+  box.dataset.open = kljuc;
   var korice = k.slika
-    ? '<span class="detail__korice"><img src="' + k.slika + '" alt="Naslovnica: ' + k.naslov + '" loading="lazy"></span>'
+    ? '<span class="detail__korice"><img src="' + k.slika + '" alt="' + (k.vrsta === 'dodatak' ? 'Fotografija artikla: ' : 'Naslovnica: ') + esc(k.naslov) + '" loading="lazy"></span>'
     : '';
   box.innerHTML =
     korice +
