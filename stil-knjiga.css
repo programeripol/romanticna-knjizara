@@ -3,6 +3,7 @@
 :root{
   --paper:#EFE4DC; --paper-deep:#E4D5CC; --ink:#37262E; --ink-soft:#6A5158;
   --damson:#6E3B50; --kraft:#A87C55; --sage:#6F7F66; --gilt:#BE9A48; --card:#F6EFE3;
+  --gilt-lo:#765F2D;   /* tamnija nijansa zlata, za tekst i naglaske */
   --display:"Fraunces",Georgia,serif; --body:"EB Garamond",Georgia,serif; --hand:"Caveat",cursive;
   --pad:clamp(1.1rem,4vw,3rem);
 }
@@ -12,9 +13,9 @@ body{
   font-family:var(--body);font-size:1.05rem;line-height:1.6;
   -webkit-font-smoothing:antialiased;
 }
-a{color:var(--damson)}
+a{color:var(--gilt-lo)}
 img{max-width:100%}
-:focus-visible{outline:2px solid var(--damson);outline-offset:3px}
+:focus-visible{outline:2px solid var(--gilt-lo);outline-offset:3px}
 .preskoci{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .preskoci:focus{width:auto;height:auto;clip:auto;left:1rem;top:1rem;z-index:60;background:var(--card);padding:.6rem .9rem;border-radius:2px}
 
@@ -38,28 +39,29 @@ img{max-width:100%}
 
 .knjiga{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,9fr);gap:clamp(1.6rem,4vw,3.4rem);align-items:start}
 .korice{
+  /* prozirna podloga, naslovnica stoji sama */
   position:sticky;top:5.5rem;
-  background:var(--card);border-radius:3px;padding:clamp(1.2rem,3vw,2.2rem);
-  box-shadow:0 30px 60px -40px rgba(55,38,46,.75);
+  padding:0 clamp(0rem,2vw,1.6rem);
+  filter:drop-shadow(0 26px 34px rgba(55,38,46,.34));
 }
-.korice img{display:block;width:100%;height:auto;border-radius:2px;box-shadow:0 18px 30px -22px rgba(55,38,46,.8)}
+.korice img{display:block;width:100%;height:auto;border-radius:2px}
 
 .eyebrow{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin:0}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.05;margin:.5rem 0 .3rem;letter-spacing:-.01em}
 .pisac{color:var(--ink-soft);font-style:italic;margin:0 0 .6rem}
 .ocjene{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 1.6rem}
 .ocjene__zvijezde{letter-spacing:.22em;color:var(--gilt);font-size:.9rem}
-.ocjene a{color:var(--damson);text-decoration:none}
+.ocjene a{color:var(--gilt-lo);text-decoration:none}
 .ocjene a:hover{text-decoration:underline}
 
 .cijena{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;margin:0 0 .25rem}
 .cijena__sad{font-family:var(--display);font-size:2.1rem;line-height:1}
 .cijena__prije{color:var(--ink-soft);font-size:1rem;text-decoration:line-through;text-decoration-thickness:1px}
-.cijena__ustedis{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--damson)}
+.cijena__ustedis{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gilt-lo)}
 .omnibus{font-size:.78rem;color:var(--ink-soft);margin:0 0 .5rem}
 .zaliha{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;margin:.2rem 0 1.4rem}
 .zaliha--ima{color:var(--sage)}
-.zaliha--nema{color:var(--damson)}
+.zaliha--nema{color:var(--gilt-lo)}
 
 .kupi{display:flex;gap:.7rem;flex-wrap:wrap;margin:0 0 1.6rem}
 .gumb{
@@ -68,7 +70,7 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(1.9rem,4.4vw,3rem)
   font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
 }
 .gumb--glavni{background:var(--ink);color:var(--paper)}
-.gumb--glavni:hover{background:var(--damson)}
+.gumb--glavni:hover{background:var(--gilt-lo)}
 .gumb--tihi{background:rgba(55,38,46,.07);color:var(--ink)}
 .gumb--tihi:hover{background:rgba(55,38,46,.14)}
 
@@ -112,11 +114,11 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(1.9rem,4.4vw,3rem)
 .slicne h2{font-family:var(--display);font-weight:400;font-size:clamp(1.4rem,3vw,2rem);margin:0 0 1.6rem}
 .red{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:clamp(1rem,2.5vw,1.8rem)}
 .kartica{display:block;text-decoration:none;color:inherit}
-.kartica__slika{display:block;background:var(--card);border-radius:3px;padding:.9rem;box-shadow:0 20px 34px -28px rgba(55,38,46,.8)}
+.kartica__slika{display:block;filter:drop-shadow(0 16px 20px rgba(55,38,46,.3))}
 .kartica__slika img{display:block;width:100%;height:auto;border-radius:2px}
 .kartica__ime{display:block;font-family:var(--display);font-size:.98rem;line-height:1.2;margin:.7rem 0 .15rem}
 .kartica__cijena{display:block;font-size:.86rem;color:var(--ink-soft)}
-.kartica:hover .kartica__ime{color:var(--damson)}
+.kartica:hover .kartica__ime{color:var(--gilt-lo)}
 
 .podnozje{margin-top:clamp(3rem,7vw,5rem);padding:2.5rem var(--pad);
   background:linear-gradient(180deg, rgba(239,228,220,0), rgba(228,213,204,.7));
