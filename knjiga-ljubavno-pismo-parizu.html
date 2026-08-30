@@ -20,9 +20,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=EB+Garamond:ital,wght@0,400..600;1,400..500&family=Caveat:wght@400..600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="stil-knjiga.css">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Product", "additionalType": "https://schema.org/Book", "name": "Ljubavno pismo Parizu", "image": ["https://www.koncept-izdavastvo.hr/wp-content/uploads/2026/02/Ljubavno-pismo-Parizu-3D-Right-1-638x1000.png"], "description": "Lilou prodaje knjige na pariškoj buvljoj tržnici i potajno spaja tuđe parove pod imenom Pariški Kupid. Kad uspješno spoji najbolju prijateljicu, njoj stigne ljubavno pismo bez potpisa, od nekoga tko zna za tu tajnu. Ostaju tri muškarca i nijedan trag: Felix, Benoit i Pascale. Junakinja je knjižarka, pa ova stoji u izlogu.", "inLanguage": "hr", "author": {"@type": "Person", "name": "Rebecca Raisin"}, "publisher": {"@type": "Organization", "name": "Koncept"}, "brand": {"@type": "Brand", "name": "Koncept"}, "offers": {"@type": "Offer", "url": "https://programeripol.github.io/romanticna-knjizara/knjiga-ljubavno-pismo-parizu.html", "priceCurrency": "EUR", "price": "18.32", "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition", "seller": {"@type": "Organization", "name": "Romantična knjižara"}}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Product", "name": "Ljubavno pismo Parizu", "image": ["https://www.koncept-izdavastvo.hr/wp-content/uploads/2026/02/Ljubavno-pismo-Parizu-3D-Right-1-638x1000.png"], "description": "Lilou prodaje knjige na pariškoj buvljoj tržnici i potajno spaja tuđe parove pod imenom Pariški Kupid. Kad uspješno spoji najbolju prijateljicu, njoj stigne ljubavno pismo bez potpisa, od nekoga tko zna za tu tajnu. Ostaju tri muškarca i nijedan trag: Felix, Benoit i Pascale. Junakinja je knjižarka, pa ova stoji u izlogu.", "offers": {"@type": "Offer", "url": "https://programeripol.github.io/romanticna-knjizara/knjiga-ljubavno-pismo-parizu.html", "priceCurrency": "EUR", "price": "18.32", "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition", "seller": {"@type": "Organization", "name": "Romantična knjižara"}}, "additionalType": "https://schema.org/Book", "inLanguage": "hr", "author": {"@type": "Person", "name": "Rebecca Raisin"}, "publisher": {"@type": "Organization", "name": "Koncept"}, "brand": {"@type": "Brand", "name": "Koncept"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Romantična knjižara", "item": "https://programeripol.github.io/romanticna-knjizara/"}, {"@type": "ListItem", "position": 2, "name": "Toplo, bez viška drame", "item": "https://programeripol.github.io/romanticna-knjizara/#police"}, {"@type": "ListItem", "position": 3, "name": "Ljubavno pismo Parizu", "item": "https://programeripol.github.io/romanticna-knjizara/knjiga-ljubavno-pismo-parizu.html"}]}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Je li knjiga Ljubavno pismo Parizu na zalihi?", "acceptedAnswer": {"@type": "Answer", "text": "Da, Ljubavno pismo Parizu je na zalihi i šalje se u roku od dva do tri radna dana. Dostava je besplatna za narudžbe iznad 50 eura."}}, {"@type": "Question", "name": "Tko je napisao knjigu Ljubavno pismo Parizu?", "acceptedAnswer": {"@type": "Answer", "text": "Napisala ju je Rebecca Raisin, a na hrvatskom je objavljuje Koncept."}}, {"@type": "Question", "name": "Koliko košta Ljubavno pismo Parizu?", "acceptedAnswer": {"@type": "Answer", "text": "Ljubavno pismo Parizu košta 18,32 eura. Redovna cijena je 22,90 eura."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Je li Ljubavno pismo Parizu na zalihi?", "acceptedAnswer": {"@type": "Answer", "text": "Da, Ljubavno pismo Parizu je na zalihi i šalje se u roku od dva do tri radna dana. Dostava je besplatna za narudžbe iznad 50 eura."}}, {"@type": "Question", "name": "Tko je napisao knjigu Ljubavno pismo Parizu?", "acceptedAnswer": {"@type": "Answer", "text": "Napisala ju je Rebecca Raisin, a na hrvatskom je objavljuje Koncept."}}, {"@type": "Question", "name": "Koliko košta Ljubavno pismo Parizu?", "acceptedAnswer": {"@type": "Answer", "text": "Ljubavno pismo Parizu košta 18,32 eura. Redovna cijena je 22,90 eura."}}]}</script>
 </head>
 <body>
 <a class="preskoci" href="#sadrzaj">Prijeđi na sadržaj</a>
@@ -32,6 +32,13 @@
     <a href="index.html#police">Police</a><a href="index.html#dnevnik">Dnevnik</a><a href="index.html#pismo">O knjižari</a>
   </nav>
   <button class="traka__kosarica" id="kosarica" type="button">Košarica</button>
+  <button class="hamburger" id="hamburger" type="button" aria-expanded="false" aria-controls="panel" aria-label="Otvori izbornik">
+    <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+  </button>
+  <div class="panel" id="panel" hidden>
+    <a href="index.html#police">Police</a><a href="index.html#dnevnik">Dnevnik</a><a href="index.html#pismo">O knjižari</a>
+    <button type="button" id="kosarica-panel">Košarica</button>
+  </div>
 </header>
 <main class="omot" id="sadrzaj">
   <nav class="mrvice" aria-label="Putanja">
@@ -62,7 +69,7 @@
         <li><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="#6F7F66" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8.2 5.6 11.4 12.5 3.9"/></svg><span>Besplatna dostava za narudžbe iznad 50 eura</span></li>
         <li><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="#6F7F66" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8.2 5.6 11.4 12.5 3.9"/></svg><span>Zamotano rukom, uz razglednicu iz knjižare</span></li>
       </ul>
-      <div class="rukopis"><span>Iz knjižare</span><p>Lilou prodaje knjige na pariškoj buvljoj tržnici i potajno spaja tuđe parove pod imenom Pariški Kupid. Onda njoj stigne pismo bez potpisa, od nekoga tko zna za to. Junakinja je knjižarka, pa ova ide u izlog.</p></div>
+      <div class="rukopis"><span>Iz knjižare</span><p>Lilou prodaje knjige na pariškoj buvljoj tržnici i potajno spaja tuđe parove pod imenom Pariški Kupid. Onda njoj stigne pismo bez potpisa, od nekoga tko zna za to. Junakinja je knjižarka, pa ova ide u izlog.</p><p class="potpis">Rosa</p></div>
       <div class="jezicci" role="tablist" aria-label="Više o knjizi">
         <button class="jezicak" type="button" role="tab" id="jez-opis" aria-controls="opis" aria-selected="true" tabindex="0">Opis</button>
         <button class="jezicak" type="button" role="tab" id="jez-autor" aria-controls="autor" aria-selected="false" tabindex="-1">O autoru</button>
@@ -93,9 +100,9 @@
   </div>
   <section class="pitanja" aria-labelledby="pitanja-naslov">
     <h2 id="pitanja-naslov">Često pitate</h2>
-    <div class="pitanje"><h3>Je li knjiga Ljubavno pismo Parizu na zalihi?</h3><p>Da, Ljubavno pismo Parizu je na zalihi i šalje se u roku od dva do tri radna dana. Dostava je besplatna za narudžbe iznad 50 eura.</p></div>
-    <div class="pitanje"><h3>Tko je napisao knjigu Ljubavno pismo Parizu?</h3><p>Napisala ju je Rebecca Raisin, a na hrvatskom je objavljuje Koncept.</p></div>
-    <div class="pitanje"><h3>Koliko košta Ljubavno pismo Parizu?</h3><p>Ljubavno pismo Parizu košta 18,32 eura. Redovna cijena je 22,90 eura.</p></div>
+    <details class="pitanje" open><summary>Je li Ljubavno pismo Parizu na zalihi?</summary><p>Da, Ljubavno pismo Parizu je na zalihi i šalje se u roku od dva do tri radna dana. Dostava je besplatna za narudžbe iznad 50 eura.</p></details>
+    <details class="pitanje"><summary>Tko je napisao knjigu Ljubavno pismo Parizu?</summary><p>Napisala ju je Rebecca Raisin, a na hrvatskom je objavljuje Koncept.</p></details>
+    <details class="pitanje"><summary>Koliko košta Ljubavno pismo Parizu?</summary><p>Ljubavno pismo Parizu košta 18,32 eura. Redovna cijena je 22,90 eura.</p></details>
   </section>
   <section class="slicne" aria-labelledby="slicne-naslov">
     <h2 id="slicne-naslov">S iste police</h2>
@@ -135,7 +142,11 @@
   var kos = document.getElementById('kosarica');
   var javi = document.getElementById('javi');
   var sat;
-  function osvjezi(){ kos.textContent = broj ? 'Košarica (' + broj + ')' : 'Košarica'; }
+  var kosP = document.getElementById('kosarica-panel');
+  function osvjezi(){
+    var t = broj ? 'Košarica (' + broj + ')' : 'Košarica';
+    kos.textContent = t; if(kosP) kosP.textContent = t;
+  }
   function poruka(t){
     javi.textContent = t; javi.classList.add('je-tu');
     clearTimeout(sat); sat = setTimeout(function(){ javi.classList.remove('je-tu'); }, 2200);
@@ -145,6 +156,23 @@
     broj++; osvjezi(); poruka('Zamotano.');
   });
   osvjezi();
+
+  // izbornik na uskom ekranu
+  (function(){
+    var gumb = document.getElementById('hamburger');
+    var panel = document.getElementById('panel');
+    if(!gumb || !panel) return;
+    function stanje(otvoren){
+      gumb.setAttribute('aria-expanded', otvoren ? 'true' : 'false');
+      gumb.setAttribute('aria-label', otvoren ? 'Zatvori izbornik' : 'Otvori izbornik');
+      panel.hidden = !otvoren;
+    }
+    gumb.addEventListener('click', function(){ stanje(gumb.getAttribute('aria-expanded') !== 'true'); });
+    panel.addEventListener('click', function(ev){ if(ev.target.closest('a')) stanje(false); });
+    document.addEventListener('keydown', function(ev){
+      if(ev.key === 'Escape' && gumb.getAttribute('aria-expanded') === 'true'){ stanje(false); gumb.focus(); }
+    });
+  })();
 
   // jezicci sa sadrzajem
   var jezicci = [].slice.call(document.querySelectorAll('.jezicak'));

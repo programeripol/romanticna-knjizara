@@ -132,6 +132,33 @@ body::after{
   color:var(--ink-soft);transition:color .3s ease;
 }
 .basket:hover{color:var(--gilt-lo)}
+/* izbornik na uskom ekranu */
+.hamburger{
+  display:none;justify-self:end;
+  background:none;border:0;padding:.45rem .2rem;cursor:pointer;
+  width:34px;
+}
+.hamburger span{display:block;height:2px;background:var(--ink);border-radius:2px;margin:5px 0;transition:transform .3s, opacity .25s}
+.hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-panel{
+  display:none;flex-direction:column;gap:.2rem;
+  padding:.6rem var(--pad) 1.2rem;
+  background:linear-gradient(180deg, var(--paper) 72%, rgba(239,228,220,0));
+}
+.nav-panel a,.basket--panel{
+  text-align:left;background:none;border:0;padding:.75rem 0;
+  font-family:var(--body);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;cursor:pointer;
+}
+.nav-panel a:hover,.basket--panel:hover{color:var(--gilt-lo)}
+@media(max-width:820px){
+  .nav{display:none}
+  .basket{display:none}
+  .hamburger{display:block}
+  .nav-panel:not([hidden]){display:flex}
+}
 @media(max-width:860px){
   .nav{display:none}
   .masthead__in{grid-template-columns:1fr auto}
@@ -612,12 +639,12 @@ body::after{
 }
 .detail.is-on{display:flex}
 .detail__korice{
-  /* prozirna podloga, naslovnica stoji sama */
-  flex:0 0 auto;width:92px;
-  filter:drop-shadow(0 16px 22px rgba(55,38,46,.42));
+  /* prozirna podloga, naslovnica stoji sama, po sredini visine panela */
+  flex:0 0 auto;width:124px;align-self:center;
+  filter:drop-shadow(0 18px 24px rgba(55,38,46,.42));
 }
 .detail__korice img{width:100%;height:auto;display:block;border-radius:2px}
-@media(max-width:640px){.detail__korice{width:74px}}
+@media(max-width:640px){.detail__korice{width:132px;align-self:center;margin:0 auto}}
 .detail__title{font-family:var(--display);font-size:1.3rem;line-height:1.15;margin:0}
 .detail__author{color:var(--ink-soft);font-size:.9rem;margin:.2rem 0 .6rem;font-style:italic}
 .detail__note{font-family:var(--hand);font-size:1.28rem;line-height:1.35;margin:0;max-width:34rem}
@@ -808,6 +835,17 @@ body::after{
       <a href="#pismo">O knjižari</a>
     </nav>
     <button class="basket" id="basket">Košarica</button>
+    <button class="hamburger" id="hamburger" type="button" aria-expanded="false" aria-controls="nav-panel" aria-label="Otvori izbornik">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="nav-panel" id="nav-panel" hidden>
+    <a href="#police">Police</a>
+    <a href="#spoj">Spoj naslijepo</a>
+    <a href="#dnevnik">Dnevnik</a>
+    <a href="#pisma">Pisma</a>
+    <a href="#pismo">O knjižari</a>
+    <button class="basket basket--panel" id="basket-panel" type="button">Košarica</button>
   </div>
 </header>
 
@@ -1038,7 +1076,7 @@ body::after{
     <h2>Ovo je knjižara koja još nema vrata.</h2>
     <p>Jednom sam ušla u knjižaru sa staklenim krovom. U košari kraj ulaza stajale su knjige zamotane u smeđi papir, a na svakoj je bila razglednica na kojoj je netko rukom napisao zašto mu se ta knjiga svidjela. Kupila sam dvije. Nijednu nisam birala.</p>
     <p>Takvu knjižaru želim otvoriti. Za sada je ovdje, na ekranu, i šaljem je poštom. Ali papir, špaga i razglednica su isti.</p>
-    <p class="signoff">Dora</p>
+    <p class="signoff">Rosa</p>
   </div>
 </section>
 
@@ -1252,37 +1290,50 @@ var POLICE = [
     naziv:'Uz čitanje',
     prikaz:'naslovnice',
     knjige:[
-      {naslov:'Brojač pročitanih knjiga, zeleni', autor:'Drvo, ručno oslikano', cijena:10.00,
-       boja:'#8FA083', visina:190,
+      {naslov:'Brojač pročitanih knjiga, zeleni', autor:'Drvo, ručno oslikano',
+       slug:'brojac-procitanih-knjiga-zeleni', vrsta:'dodatak', cijena:10.00, boja:'#8FA083',
+       visina:190, dostupno:true,
        slika:'slike/dodaci/brojac-zeleni.png',
-       napomena:'Okreneš znamenku svaki put kad zatvoriš knjigu. Stoji na polici i tiho te podsjeća koliko si ove godine zapravo pročitala.'},
-      {naslov:'Brojač pročitanih knjiga, rozi', autor:'Drvo, ručno oslikano', cijena:10.00,
-       boja:'#E2C3C0', visina:190,
+       napomena:'Okreneš znamenku svaki put kad zatvoriš knjigu. Stoji na polici i tiho te podsjeća koliko si ove godine zapravo pročitala.',
+       opis:['Drvena knjižara u boji žalfije, s tri okretne znamenke u izlogu. Postaviš je na policu u siječnju i cijelu godinu okrećeš brojku svaki put kad zatvoriš knjigu.', 'Na trijemu spava mačka, uz vrata stoji klupica i lampion. Sitnica koja stoji na mjestu i tiho vodi računicu umjesto tebe.']},
+      {naslov:'Brojač pročitanih knjiga, rozi', autor:'Drvo, ručno oslikano',
+       slug:'brojac-procitanih-knjiga-rozi', vrsta:'dodatak', cijena:10.00, boja:'#E2C3C0',
+       visina:190, dostupno:true,
        slika:'slike/dodaci/brojac-rozi.png',
-       napomena:'Isti brojač, ali u ružičastoj knjižari s tendom i natpisom Bookshop. Ovaj biram kad mi je polica pretjerano zelena.'},
-      {naslov:'Tegla za biljku, Just a girl who loves books', autor:'Keramika i bambus', cijena:10.00,
-       boja:'#E9E4DC', visina:190,
+       napomena:'Isti brojač, ali u ružičastoj knjižari s tendom i natpisom Bookshop. Ovaj biram kad mi je polica pretjerano zelena.',
+       opis:['Isti brojač, druga knjižara. Ova ima ružičastu tendu na pruge, ružu uz dovratnik i natpis Bookshop na visećoj ploči.', 'U izlogu stoje tri kartice s brojkama, a ispred je stolić za dvoje i ploča na kojoj piše One More Chapter. Biram je kad mi je polica pretjerano zelena.']},
+      {naslov:'Tegla za biljku, Just a girl who loves books', autor:'Keramika i bambus',
+       slug:'tegla-za-biljku-just-a-girl-who-loves-books', vrsta:'dodatak', cijena:10.00,
+       boja:'#E9E4DC', visina:190, dostupno:true,
        slika:'slike/dodaci/tegla-girl-books.png',
-       napomena:'Za sukulent koji preživi i mene. Natpis je dovoljno jasan da ne moraš ništa objašnjavati onome tko ti dođe u posjet.'},
-      {naslov:'Noćna lampa s tulipanima', autor:'Staklo i drvo', cijena:10.00, boja:'#E8D6C4',
-       visina:190,
+       napomena:'Za sukulent koji preživi i mene. Natpis je dovoljno jasan da ne moraš ništa objašnjavati onome tko ti dođe u posjet.',
+       opis:['Bijela keramička tegla na bambusovom podnošku, s natpisom koji ne traži objašnjenje. Promjer je taman za sukulent ili mali aloj.', 'Podnožak hvata višak vode pa ti polica ostane suha. Stoji uz knjige, a ne umjesto njih.']},
+      {naslov:'Noćna lampa s tulipanima', autor:'Staklo i drvo', slug:'nocna-lampa-s-tulipanima',
+       vrsta:'dodatak', cijena:10.00, boja:'#E8D6C4', visina:190, dostupno:true,
        slika:'slike/dodaci/lampa-tulipani.png',
-       napomena:'Tri tulipana koja svijetle ispod staklenog zvona. Dovoljno svjetla za još jedno poglavlje, premalo da nekoga probudi.'},
-      {naslov:'Heklani tulipani u vazici', autor:'Pamučna pređa, ručni rad', cijena:10.00,
-       boja:'#EFD9DE', visina:190,
+       napomena:'Tri tulipana koja svijetle ispod staklenog zvona. Dovoljno svjetla za još jedno poglavlje, premalo da nekoga probudi.',
+       opis:['Tri tulipana pod staklenim zvonom, na drvenom postolju. Svjetlo je toplo i prigušeno, bez plave nijanse koja tjera san.', 'Dovoljno da pročitaš još jedno poglavlje, premalo da probudiš onoga tko spava pored tebe. Pali se dodirom postolja.']},
+      {naslov:'Heklani tulipani u vazici', autor:'Pamučna pređa, ručni rad',
+       slug:'heklani-tulipani-u-vazici', vrsta:'dodatak', cijena:10.00, boja:'#EFD9DE', visina:190,
+       dostupno:true,
        slika:'slike/dodaci/heklani-tulipani.png',
-       napomena:'Heklani, pa ne venu i ne traže vodu. Uz njih ide etiketa koja kaže keep your smile i to je otprilike cijela poanta.'},
-      {naslov:'Budilnik s dva zvona', autor:'Mjed i staklo', cijena:10.00, boja:'#C8A97A', visina:190,
+       napomena:'Heklani, pa ne venu i ne traže vodu. Uz njih ide etiketa koja kaže keep your smile i to je otprilike cijela poanta.',
+       opis:['Pet heklanih tulipana u heklanoj vazici, ručni rad od pamučne pređe. Ne venu, ne traže vodu i preživljavaju selidbe.', 'Uz vazicu ide kožna vrpca i etiketa na kojoj piše keep your smile. Ide uz svaki paket koji šaljem nekome tko slavi nešto.']},
+      {naslov:'Budilnik s dva zvona', autor:'Mjed i staklo', slug:'budilnik-s-dva-zvona',
+       vrsta:'dodatak', cijena:10.00, boja:'#C8A97A', visina:190, dostupno:true,
        slika:'slike/dodaci/budilnik.png',
-       napomena:'Mjedeni, s dva zvona i pravim kucanjem. Stavi ga preko sobe pa ćeš stvarno ustati, a ne samo obećati da hoćeš.'},
-      {naslov:'Vaza u obliku knjige', autor:'Prozirni akril', cijena:10.00, boja:'#E4E9EA',
-       visina:190,
+       napomena:'Mjedeni, s dva zvona i pravim kucanjem. Stavi ga preko sobe pa ćeš stvarno ustati, a ne samo obećati da hoćeš.',
+       opis:['Mjedeni budilnik s dva zvona i brojčanikom boje starog papira. Kuca čujno, onako kako budilnici više ne kucaju.', 'Stavi ga preko sobe pa ćeš stvarno ustati, a ne samo obećati da hoćeš. Nema zaslon, nema obavijesti, nema razloga da uzmeš mobitel u ruke prije doručka.']},
+      {naslov:'Vaza u obliku knjige', autor:'Prozirni akril', slug:'vaza-u-obliku-knjige',
+       vrsta:'dodatak', cijena:10.00, boja:'#E4E9EA', visina:190, dostupno:true,
        slika:'slike/dodaci/vaza-knjiga.png',
-       napomena:'Prozirna vaza koja izgleda kao otvorena knjiga. Tri tulipana i polica odmah izgleda kao izlog.'},
-      {naslov:'Tegla u obliku hrpe knjiga', autor:'Keramika', cijena:10.00, boja:'#BFDDD6',
-       visina:190,
+       napomena:'Prozirna vaza koja izgleda kao otvorena knjiga. Tri tulipana i polica odmah izgleda kao izlog.',
+       opis:['Prozirna akrilna vaza oblikovana kao otvorena knjiga, s natpisom Un livre sur les Fleurs. Uska je pa stane između knjiga na polici.', 'Tri tulipana i polica odmah izgleda kao izlog. Puni se s malo vode, jer je plića nego što se čini.']},
+      {naslov:'Tegla u obliku hrpe knjiga', autor:'Keramika', slug:'tegla-u-obliku-hrpe-knjiga',
+       vrsta:'dodatak', cijena:10.00, boja:'#BFDDD6', visina:190, dostupno:true,
        slika:'slike/dodaci/tegla-hrpa-knjiga.png',
-       napomena:'Tri klasika složena jedan na drugi, a gore stane sukulent. Wuthering Heights, Emma i Little Women, u keramici.'}
+       napomena:'Tri klasika složena jedan na drugi, a gore stane sukulent. Wuthering Heights, Emma i Little Women, u keramici.',
+       opis:['Keramička tegla oblikovana kao tri složena klasika: Wuthering Heights, Emma i Little Women. Gornja knjiga je otvorena i u nju stane sukulent.', 'Hrptovi su oslikani ružama i pavitom, rukom. Poklon za nekoga tko ima previše knjiga i premalo mjesta.']}
     ]
   }
 ];
@@ -1466,7 +1517,7 @@ document.getElementById('shelves').addEventListener('click', function(e){
       (k.dostupno === false ? '<span class="detail__zaliha">Trenutno nije na zalihi</span>' : '') +
       '<button class="btn-add" data-add>Zamotaj mi je</button>' +
       // knjige s naslovnicom imaju svoju stranicu
-      (k.slug ? '<a class="btn-vise" href="knjiga-' + k.slug + '.html">Više o knjizi</a>' : '') +
+      (k.slug ? '<a class="btn-vise" href="knjiga-' + k.slug + '.html">' + (k.vrsta === 'dodatak' ? 'Više o artiklu' : 'Više o knjizi') + '</a>' : '') +
     '</div>';
   box.classList.add('is-on');
 });
@@ -1474,9 +1525,33 @@ document.getElementById('shelves').addEventListener('click', function(e){
 // basket
 var count = 0;
 var basketEl = document.getElementById('basket');
+var basketPanelEl = document.getElementById('basket-panel');
 function osvjeziKosaricu(){
-  basketEl.textContent = count ? 'Košarica (' + count + ')' : 'Košarica';
+  var t = count ? 'Košarica (' + count + ')' : 'Košarica';
+  basketEl.textContent = t;
+  if(basketPanelEl) basketPanelEl.textContent = t;
 }
+
+// izbornik na uskom ekranu
+(function(){
+  var gumb = document.getElementById('hamburger');
+  var panel = document.getElementById('nav-panel');
+  if(!gumb || !panel) return;
+  function stanje(otvoren){
+    gumb.setAttribute('aria-expanded', otvoren ? 'true' : 'false');
+    gumb.setAttribute('aria-label', otvoren ? 'Zatvori izbornik' : 'Otvori izbornik');
+    panel.hidden = !otvoren;
+  }
+  gumb.addEventListener('click', function(){
+    stanje(gumb.getAttribute('aria-expanded') !== 'true');
+  });
+  panel.addEventListener('click', function(ev){
+    if(ev.target.closest('a')) stanje(false);
+  });
+  document.addEventListener('keydown', function(ev){
+    if(ev.key === 'Escape' && gumb.getAttribute('aria-expanded') === 'true'){ stanje(false); gumb.focus(); }
+  });
+})();
 var toast = document.getElementById('toast');
 var timer;
 function ping(msg){

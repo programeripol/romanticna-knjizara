@@ -20,9 +20,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=EB+Garamond:ital,wght@0,400..600;1,400..500&family=Caveat:wght@400..600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="stil-knjiga.css">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Product", "additionalType": "https://schema.org/Book", "name": "Zamjena", "image": ["https://programeripol.github.io/romanticna-knjizara/slike/naslovnice/zamjena.jpg"], "description": "Leena treba pauzu od posla, a njezina baka Eileen treba nešto novo. Zamijene živote na dva mjeseca: Leena preuzima selo u Yorkshireu, Eileen odlazi u London. Beth O'Leary vodi dvije junakinje razmaknute pola stoljeća i obje su jednako žive. Ako si čitala Cimere, ovo je ista toplina.", "inLanguage": "hr", "author": {"@type": "Person", "name": "Beth O'Leary"}, "publisher": {"@type": "Organization", "name": "Znanje"}, "brand": {"@type": "Brand", "name": "Znanje"}, "offers": {"@type": "Offer", "url": "https://programeripol.github.io/romanticna-knjizara/knjiga-zamjena.html", "priceCurrency": "EUR", "price": "15.79", "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition", "seller": {"@type": "Organization", "name": "Romantična knjižara"}}, "isbn": "9789533605319", "numberOfPages": 368}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Product", "name": "Zamjena", "image": ["https://programeripol.github.io/romanticna-knjizara/slike/naslovnice/zamjena.jpg"], "description": "Leena treba pauzu od posla, a njezina baka Eileen treba nešto novo. Zamijene živote na dva mjeseca: Leena preuzima selo u Yorkshireu, Eileen odlazi u London. Beth O'Leary vodi dvije junakinje razmaknute pola stoljeća i obje su jednako žive. Ako si čitala Cimere, ovo je ista toplina.", "offers": {"@type": "Offer", "url": "https://programeripol.github.io/romanticna-knjizara/knjiga-zamjena.html", "priceCurrency": "EUR", "price": "15.79", "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition", "seller": {"@type": "Organization", "name": "Romantična knjižara"}}, "additionalType": "https://schema.org/Book", "inLanguage": "hr", "author": {"@type": "Person", "name": "Beth O'Leary"}, "publisher": {"@type": "Organization", "name": "Znanje"}, "brand": {"@type": "Brand", "name": "Znanje"}, "isbn": "9789533605319", "numberOfPages": 368}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Romantična knjižara", "item": "https://programeripol.github.io/romanticna-knjizara/"}, {"@type": "ListItem", "position": 2, "name": "Toplo, bez viška drame", "item": "https://programeripol.github.io/romanticna-knjizara/#police"}, {"@type": "ListItem", "position": 3, "name": "Zamjena", "item": "https://programeripol.github.io/romanticna-knjizara/knjiga-zamjena.html"}]}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Je li knjiga Zamjena na zalihi?", "acceptedAnswer": {"@type": "Answer", "text": "Da, Zamjena je na zalihi i šalje se u roku od dva do tri radna dana. Dostava je besplatna za narudžbe iznad 50 eura."}}, {"@type": "Question", "name": "Tko je napisao knjigu Zamjena?", "acceptedAnswer": {"@type": "Answer", "text": "Napisala ju je Beth O'Leary, a na hrvatskom je objavljuje Znanje."}}, {"@type": "Question", "name": "Koliko stranica ima Zamjena?", "acceptedAnswer": {"@type": "Answer", "text": "Zamjena ima 368 stranica, u izdanju s mekim uvezom."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Je li Zamjena na zalihi?", "acceptedAnswer": {"@type": "Answer", "text": "Da, Zamjena je na zalihi i šalje se u roku od dva do tri radna dana. Dostava je besplatna za narudžbe iznad 50 eura."}}, {"@type": "Question", "name": "Tko je napisao knjigu Zamjena?", "acceptedAnswer": {"@type": "Answer", "text": "Napisala ju je Beth O'Leary, a na hrvatskom je objavljuje Znanje."}}, {"@type": "Question", "name": "Koliko stranica ima Zamjena?", "acceptedAnswer": {"@type": "Answer", "text": "Zamjena ima 368 stranica, u izdanju s mekim uvezom."}}]}</script>
 </head>
 <body>
 <a class="preskoci" href="#sadrzaj">Prijeđi na sadržaj</a>
@@ -32,6 +32,13 @@
     <a href="index.html#police">Police</a><a href="index.html#dnevnik">Dnevnik</a><a href="index.html#pismo">O knjižari</a>
   </nav>
   <button class="traka__kosarica" id="kosarica" type="button">Košarica</button>
+  <button class="hamburger" id="hamburger" type="button" aria-expanded="false" aria-controls="panel" aria-label="Otvori izbornik">
+    <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+  </button>
+  <div class="panel" id="panel" hidden>
+    <a href="index.html#police">Police</a><a href="index.html#dnevnik">Dnevnik</a><a href="index.html#pismo">O knjižari</a>
+    <button type="button" id="kosarica-panel">Košarica</button>
+  </div>
 </header>
 <main class="omot" id="sadrzaj">
   <nav class="mrvice" aria-label="Putanja">
@@ -59,7 +66,7 @@
         <li><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="#6F7F66" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8.2 5.6 11.4 12.5 3.9"/></svg><span>Besplatna dostava za narudžbe iznad 50 eura</span></li>
         <li><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="#6F7F66" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8.2 5.6 11.4 12.5 3.9"/></svg><span>Zamotano rukom, uz razglednicu iz knjižare</span></li>
       </ul>
-      <div class="rukopis"><span>Iz knjižare</span><p>Unuka i baka zamijene živote na dva mjeseca. Obje se snađu bolje nego što su očekivale.</p></div>
+      <div class="rukopis"><span>Iz knjižare</span><p>Unuka i baka zamijene živote na dva mjeseca. Obje se snađu bolje nego što su očekivale.</p><p class="potpis">Rosa</p></div>
       <div class="jezicci" role="tablist" aria-label="Više o knjizi">
         <button class="jezicak" type="button" role="tab" id="jez-opis" aria-controls="opis" aria-selected="true" tabindex="0">Opis</button>
         <button class="jezicak" type="button" role="tab" id="jez-autor" aria-controls="autor" aria-selected="false" tabindex="-1">O autoru</button>
@@ -93,9 +100,9 @@
   </div>
   <section class="pitanja" aria-labelledby="pitanja-naslov">
     <h2 id="pitanja-naslov">Često pitate</h2>
-    <div class="pitanje"><h3>Je li knjiga Zamjena na zalihi?</h3><p>Da, Zamjena je na zalihi i šalje se u roku od dva do tri radna dana. Dostava je besplatna za narudžbe iznad 50 eura.</p></div>
-    <div class="pitanje"><h3>Tko je napisao knjigu Zamjena?</h3><p>Napisala ju je Beth O&#x27;Leary, a na hrvatskom je objavljuje Znanje.</p></div>
-    <div class="pitanje"><h3>Koliko stranica ima Zamjena?</h3><p>Zamjena ima 368 stranica, u izdanju s mekim uvezom.</p></div>
+    <details class="pitanje" open><summary>Je li Zamjena na zalihi?</summary><p>Da, Zamjena je na zalihi i šalje se u roku od dva do tri radna dana. Dostava je besplatna za narudžbe iznad 50 eura.</p></details>
+    <details class="pitanje"><summary>Tko je napisao knjigu Zamjena?</summary><p>Napisala ju je Beth O&#x27;Leary, a na hrvatskom je objavljuje Znanje.</p></details>
+    <details class="pitanje"><summary>Koliko stranica ima Zamjena?</summary><p>Zamjena ima 368 stranica, u izdanju s mekim uvezom.</p></details>
   </section>
   <section class="slicne" aria-labelledby="slicne-naslov">
     <h2 id="slicne-naslov">S iste police</h2>
@@ -135,7 +142,11 @@
   var kos = document.getElementById('kosarica');
   var javi = document.getElementById('javi');
   var sat;
-  function osvjezi(){ kos.textContent = broj ? 'Košarica (' + broj + ')' : 'Košarica'; }
+  var kosP = document.getElementById('kosarica-panel');
+  function osvjezi(){
+    var t = broj ? 'Košarica (' + broj + ')' : 'Košarica';
+    kos.textContent = t; if(kosP) kosP.textContent = t;
+  }
   function poruka(t){
     javi.textContent = t; javi.classList.add('je-tu');
     clearTimeout(sat); sat = setTimeout(function(){ javi.classList.remove('je-tu'); }, 2200);
@@ -145,6 +156,23 @@
     broj++; osvjezi(); poruka('Zamotano.');
   });
   osvjezi();
+
+  // izbornik na uskom ekranu
+  (function(){
+    var gumb = document.getElementById('hamburger');
+    var panel = document.getElementById('panel');
+    if(!gumb || !panel) return;
+    function stanje(otvoren){
+      gumb.setAttribute('aria-expanded', otvoren ? 'true' : 'false');
+      gumb.setAttribute('aria-label', otvoren ? 'Zatvori izbornik' : 'Otvori izbornik');
+      panel.hidden = !otvoren;
+    }
+    gumb.addEventListener('click', function(){ stanje(gumb.getAttribute('aria-expanded') !== 'true'); });
+    panel.addEventListener('click', function(ev){ if(ev.target.closest('a')) stanje(false); });
+    document.addEventListener('keydown', function(ev){
+      if(ev.key === 'Escape' && gumb.getAttribute('aria-expanded') === 'true'){ stanje(false); gumb.focus(); }
+    });
+  })();
 
   // jezicci sa sadrzajem
   var jezicci = [].slice.call(document.querySelectorAll('.jezicak'));
