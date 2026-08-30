@@ -1,0 +1,124 @@
+/* Stranica knjige. Ista pravila kao naslovna: bez crta, bez kapsula. */
+*{box-sizing:border-box}
+:root{
+  --paper:#EFE4DC; --paper-deep:#E4D5CC; --ink:#37262E; --ink-soft:#6A5158;
+  --damson:#6E3B50; --kraft:#A87C55; --sage:#6F7F66; --gilt:#BE9A48; --card:#F6EFE3;
+  --display:"Fraunces",Georgia,serif; --body:"EB Garamond",Georgia,serif; --hand:"Caveat",cursive;
+  --pad:clamp(1.1rem,4vw,3rem);
+}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:1.05rem;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--damson)}
+img{max-width:100%}
+:focus-visible{outline:2px solid var(--damson);outline-offset:3px}
+.preskoci{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.preskoci:focus{width:auto;height:auto;clip:auto;left:1rem;top:1rem;z-index:60;background:var(--card);padding:.6rem .9rem;border-radius:2px}
+
+.traka{
+  position:sticky;top:0;z-index:40;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;
+  padding:1rem var(--pad);
+  background:linear-gradient(180deg, var(--paper) 62%, rgba(239,228,220,0));
+}
+.traka__ime{font-family:var(--display);font-size:1.15rem;text-decoration:none;color:var(--ink)}
+.traka__sredina{display:flex;gap:1.4rem;justify-content:center}
+.traka__sredina a{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft)}
+.traka__sredina a:hover{color:var(--ink)}
+.traka__kosarica{justify-self:end;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;background:none;border:0;color:var(--ink-soft);cursor:pointer}
+
+.omot{max-width:72rem;margin:0 auto;padding:0 var(--pad) 4rem}
+.mrvice{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin:.5rem 0 2rem}
+.mrvice a{color:var(--ink-soft);text-decoration:none}
+.mrvice a:hover{color:var(--ink)}
+.mrvice span{opacity:.45;padding:0 .45rem}
+
+.knjiga{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,9fr);gap:clamp(1.6rem,4vw,3.4rem);align-items:start}
+.korice{
+  position:sticky;top:5.5rem;
+  background:var(--card);border-radius:3px;padding:clamp(1.2rem,3vw,2.4rem);
+  box-shadow:0 30px 60px -40px rgba(55,38,46,.75);
+}
+.korice img{display:block;width:100%;border-radius:2px;box-shadow:0 18px 30px -22px rgba(55,38,46,.8)}
+
+.eyebrow{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin:0}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.05;margin:.5rem 0 .3rem;letter-spacing:-.01em}
+.pisac{color:var(--ink-soft);font-style:italic;margin:0 0 1.6rem}
+.cijena{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;margin:0 0 .3rem}
+.cijena__sad{font-family:var(--display);font-size:2rem;line-height:1}
+.cijena__prije{color:var(--ink-soft);font-size:1rem;text-decoration:line-through;text-decoration-thickness:1px}
+.cijena__ustedis{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--damson)}
+.zaliha{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;margin:.2rem 0 1.4rem}
+.zaliha--ima{color:var(--sage)}
+.zaliha--nema{color:var(--damson)}
+
+.kupi{display:flex;gap:.7rem;flex-wrap:wrap;margin:0 0 2.2rem}
+.gumb{
+  border:0;border-radius:2px;cursor:pointer;text-decoration:none;display:inline-block;
+  padding:.95rem 1.6rem;font-family:var(--body);
+  font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
+}
+.gumb--glavni{background:var(--ink);color:var(--paper)}
+.gumb--glavni:hover{background:var(--damson)}
+.gumb--tihi{background:rgba(55,38,46,.07);color:var(--ink)}
+.gumb--tihi:hover{background:rgba(55,38,46,.14)}
+
+.rukopis{
+  background:var(--card);border-radius:3px;padding:1.3rem 1.5rem;margin:0 0 2.2rem;
+  box-shadow:0 18px 34px -26px rgba(55,38,46,.6);
+}
+.rukopis p{font-family:var(--hand);font-size:1.35rem;line-height:1.3;margin:0}
+.rukopis span{display:block;font-family:var(--body);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.5rem}
+
+.opis p{margin:0 0 1.1rem;max-width:38rem}
+.podaci{margin:2.2rem 0 0;display:grid;grid-template-columns:auto 1fr;gap:.45rem 1.6rem;font-size:.95rem;max-width:32rem}
+.podaci dt{color:var(--ink-soft);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;align-self:center}
+.podaci dd{margin:0}
+
+.slicne{margin-top:clamp(3.5rem,8vw,6rem);padding-top:clamp(2rem,5vw,3rem);
+  background:linear-gradient(180deg, rgba(228,213,204,.55), rgba(239,228,220,0) 60%)}
+.slicne h2{font-family:var(--display);font-weight:400;font-size:clamp(1.4rem,3vw,2rem);margin:0 0 1.6rem}
+.red{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:clamp(1rem,2.5vw,1.8rem)}
+.kartica{display:block;text-decoration:none;color:inherit}
+.kartica__slika{display:block;background:var(--card);border-radius:3px;padding:.9rem;box-shadow:0 20px 34px -28px rgba(55,38,46,.8)}
+.kartica__slika img{display:block;width:100%;border-radius:2px}
+.kartica__ime{display:block;font-family:var(--display);font-size:.98rem;line-height:1.2;margin:.7rem 0 .15rem}
+.kartica__cijena{display:block;font-size:.86rem;color:var(--ink-soft)}
+.kartica:hover .kartica__ime{color:var(--damson)}
+
+.podnozje{margin-top:clamp(3rem,7vw,5rem);padding:2.5rem var(--pad);
+  background:linear-gradient(180deg, rgba(239,228,220,0), rgba(228,213,204,.7));
+  font-size:.8rem;color:var(--ink-soft);text-align:center}
+
+.javi{
+  position:fixed;left:50%;bottom:1.4rem;transform:translate(-50%,140%);
+  background:var(--ink);color:var(--paper);padding:.75rem 1.3rem;border-radius:2px;
+  font-size:.78rem;letter-spacing:.06em;transition:transform .35s cubic-bezier(.2,.8,.2,1);z-index:50;
+  pointer-events:none;
+}
+.javi.je-tu{transform:translate(-50%,0)}
+
+.dno{display:none}
+@media(max-width:780px){
+  /* na uskom ekranu ime i kosarica dijele prvi red, izbornik pada u drugi */
+  .traka{grid-template-columns:1fr auto;gap:.5rem 1rem}
+  .traka__ime{grid-row:1;grid-column:1}
+  .traka__kosarica{grid-row:1;grid-column:2}
+  .traka__sredina{grid-row:2;grid-column:1 / -1;justify-content:flex-start;gap:1.1rem;flex-wrap:wrap}
+  .knjiga{grid-template-columns:1fr}
+  .korice{position:static;max-width:15rem}
+  .dno{
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    position:fixed;left:0;right:0;bottom:0;z-index:45;padding:.8rem var(--pad);
+    background:linear-gradient(0deg, var(--paper) 70%, rgba(239,228,220,0));
+  }
+  .dno__cijena{font-family:var(--display);font-size:1.25rem}
+  body{padding-bottom:5rem}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none !important;animation:none !important}
+}

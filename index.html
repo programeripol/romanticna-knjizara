@@ -614,6 +614,14 @@ body::after{
 .detail__side{display:flex;flex-direction:column;align-items:flex-end;gap:.6rem;margin-left:auto}
 .detail__price{font-family:var(--display);font-size:1.3rem}
 /* stara cijena stoji uz novu, precrtana i tiša */
+.detail__zaliha{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--damson)}
+.btn-vise{
+  display:block;width:100%;text-align:center;text-decoration:none;
+  background:rgba(55,38,46,.07);color:var(--ink);border-radius:2px;
+  padding:.72rem 1rem;
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+}
+.btn-vise:hover,.btn-vise:focus-visible{background:rgba(55,38,46,.14)}
 .detail__stara{font-family:var(--body);font-size:.92rem;color:var(--ink-soft);text-decoration:line-through;text-decoration-thickness:1px;margin-left:.5rem}
 @media(max-width:640px){
   .detail__side{align-items:flex-start;margin-left:0;width:100%}
@@ -1102,7 +1110,8 @@ var POLICE = [
        napomena:'Ugovoreni brak, muškarac koji je hladan iz principa. Prva u serijalu Kraljevi grijeha i najbolja ulazna točka ako još nisi čitala Huang.'},
       {naslov:'Mračna mržnja', autor:'Ana Huang, Egmont', cijena:17.99, boja:'#8B4A3C', visina:190,
        napomena:'Lažna veza između dvoje ljudi koji se stvarno ne podnose. Točno ono što piše na etiketi i ni gram manje.'},
-      {naslov:'Ljubavna hipoteza', autor:'Ali Hazelwood, Sonatina', cijena:18.00, boja:'#3E4F63', visina:220,
+      {naslov:'Ljubavna hipoteza', autor:'Ali Hazelwood, Sonatina', cijena:18, boja:'#3E4F63',
+       visina:220,
        napomena:'Znanstvenica koja sve analizira osim vlastitih osjećaja. Najmekša knjiga na ovoj polici. Počni ovdje ako ti je dark previše.'},
       {naslov:'Kralj oholosti', autor:'Ana Huang, Egmont', cijena:17.99, boja:'#A87C55', visina:178,
        napomena:'Druga u serijalu. Suzdržaniji je od prve, ali napetost drži duže.'}
@@ -1122,15 +1131,19 @@ var POLICE = [
   {
     naziv:'Uz čitanje',
     knjige:[
-      {naslov:'Ljestve za biblioteku', autor:'Hrast, uljeno finiširano', cijena:189.00, boja:'#8A6440', visina:214,
+      {naslov:'Ljestve za biblioteku', autor:'Hrast, uljeno finiširano', cijena:189, boja:'#8A6440',
+       visina:214,
        napomena:'Klizne, na mjedenoj šipci. Skupe su i znam to, ali ovo je predmet koji kupiš jednom u životu.'},
-      {naslov:'Brojač pročitanih knjiga', autor:'Mjed i emajl', cijena:24.00, boja:'#6F7F66', visina:172,
+      {naslov:'Brojač pročitanih knjiga', autor:'Mjed i emajl', cijena:24, boja:'#6F7F66', visina:172,
        napomena:'Okreneš kotačić svaki put kad zatvoriš knjigu. Opasno je zabavno.'},
-      {naslov:'Noćna lampa s prigušivačem', autor:'Staklo i mjed', cijena:62.00, boja:'#BE9A48', visina:196, tamnoSlovo:true,
+      {naslov:'Noćna lampa s prigušivačem', autor:'Staklo i mjed', cijena:62, boja:'#BE9A48',
+       tamnoSlovo:true, visina:196,
        napomena:'Toplo svjetlo, bez plave nijanse. Za one koji čitaju dok drugi spava.'},
-      {naslov:'Držač za cvijeće među knjigama', autor:'Keramika', cijena:18.00, boja:'#B0698A', visina:160,
+      {naslov:'Držač za cvijeće među knjigama', autor:'Keramika', cijena:18, boja:'#B0698A',
+       visina:160,
        napomena:'Uska epruveta koja stane između knjiga na polici. Jedna grančica i polica živi.'},
-      {naslov:'Bookmarkeri, set od šest', autor:'Tisak na kartonu', cijena:9.00, boja:'#3E4F63', visina:184,
+      {naslov:'Bookmarkeri, set od šest', autor:'Tisak na kartonu', cijena:9, boja:'#3E4F63',
+       visina:184,
        napomena:'Naši, tiskani u Zagrebu. Jedan ide uz svaku narudžbu besplatno.'}
     ]
   },
@@ -1138,57 +1151,105 @@ var POLICE = [
     naziv:'Romantični bjegovi Julie Caplin',
     knjige:[
       {naslov:'Savršeni kutak u Pragu', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
-       cijena:16.80, stara:21.00, boja:'#E6E0EC', tamnoSlovo:true, visina:236,
+       slug:'savrseni-kutak-u-pragu', cijena:16.80, stara:21, boja:'#E6E0EC', tamnoSlovo:true,
+       visina:236, dostupno:true,
        slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2025/09/Savrseni-kutak-u-Pragu-MU-1-652x1000.jpg',
-       napomena:'Cimeri koji se poznaju od prije, i Prag pod snijegom. Najnovija prevedena, drži je sprijeda.'},
+       napomena:'Cimeri koji se poznaju od prije, i Prag pod snijegom. Najnovija prevedena, drži je sprijeda.',
+       opis:['Cimeri koji se od prije poznaju, i Prag pod snijegom. Najnovija prevedena u serijalu Romantični bjegovi.']},
       {naslov:'Mali hotel u Portugalu', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
-       cijena:18.32, stara:22.90, boja:'#DCEAE6', tamnoSlovo:true, visina:228,
+       slug:'mali-hotel-u-portugalu', cijena:18.32, stara:22.90, boja:'#DCEAE6', tamnoSlovo:true,
+       visina:228, dostupno:true,
        hrbatSlika:'slike/hrbati/portugal.jpg',
        slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2026/05/Mali-hotel-u-Portugalu-3D-675x1000.png',
-       napomena:'Izlazi u lipnju 2026. Algarve, hotel uz more. Ovu naručuješ u pretprodaji.'},
-      {naslov:'Mala skijaška koliba u Švicarskoj', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
-       cijena:14.45, stara:19.01, boja:'#E0E9F1', tamnoSlovo:true, visina:244,
+       napomena:'Algarve, hotel uz more i ljeto koje nije išlo po planu. Najsvjetlija u serijalu.',
+       opis:['Algarve, hotel uz more i ljeto koje mijenja planove. Iz serijala Romantični bjegovi.']},
+      {naslov:'Mala skijaška koliba u Švicarskoj', autor:'Julie Caplin, Koncept',
+       hrbatAutor:'Julie Caplin', slug:'mala-skijaska-koliba-u-svicarskoj', cijena:14.45, stara:19.01,
+       boja:'#E0E9F1', tamnoSlovo:true, visina:244, dostupno:true,
        slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2024/08/Mala-skijaska-koliba-652x1000.jpg',
-       napomena:'Snijeg, planina, jedna soba manje nego što je trebalo.'},
+       napomena:'Snijeg, planina, jedna soba manje nego što je trebalo.',
+       opis:['Snijeg, planina i jedna soba manje nego što je trebalo. Zimska u serijalu Romantični bjegovi.']},
       {naslov:'Vila s pogledom', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
-       cijena:12.95, stara:18.50, boja:'#F3E7D6', tamnoSlovo:true, visina:222,
+       slug:'vila-s-pogledom', cijena:12.95, stara:18.50, boja:'#F3E7D6', tamnoSlovo:true, visina:222,
+       dostupno:false,
        hrbatSlika:'slike/hrbati/vila-s-pogledom.jpg',
        slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2024/05/Vila-s-pogledom-MU-657x1000.jpg',
-       napomena:'Amalfi, ružičasta vila i otac za kojeg nije znala da postoji. Ljetna knjiga u punom smislu.'},
+       napomena:'Amalfi, ružičasta vila i otac za kojeg nije znala da postoji. Ljetna knjiga u punom smislu.',
+       opis:['Amalfi, ružičasta vila i otac za kojeg nije znala da postoji. Ljetna u serijalu Romantični bjegovi.']},
       {naslov:'Francuski dvorac iz snova', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
-       cijena:14.80, stara:18.50, boja:'#F0E2E4', tamnoSlovo:true, visina:232,
+       slug:'francuski-dvorac-iz-snova', cijena:14.80, stara:18.50, boja:'#F0E2E4', tamnoSlovo:true,
+       visina:232, dostupno:true,
        hrbatSlika:'slike/hrbati/francuski-dvorac.jpg',
        slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2024/06/Francuski-dvorac-iz-snova-1-652x1000.jpg',
-       napomena:'Champagne, dvorac i ljeto koje popravi više nego što je planirala.'},
+       napomena:'Champagne, dvorac i ljeto koje popravi više nego što je planirala.',
+       opis:['Champagne, dvorac i ljeto koje popravi više nego što je bilo planirano.']},
       {naslov:'Čarobni dvorac u Škotskoj', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
-       cijena:12.95, stara:18.50, boja:'#E2E7DE', tamnoSlovo:true, visina:218,
+       slug:'carobni-dvorac-u-skotskoj', cijena:12.95, stara:18.50, boja:'#E2E7DE', tamnoSlovo:true,
+       visina:218, dostupno:true,
        hrbatSlika:'slike/hrbati/skotska.jpg',
        slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2023/10/Screenshot_20231026-114231_Adobe-Acrobat-667x1000.jpg',
-       napomena:'Izzy naslijedi dvorac u škotskom gorju i pokuša ga do Božića pretvoriti u mali hotel. Susjed koji piše trilere i majka koja se pojavi bez najave rade joj više problema od krova. Zimska, a nije zaslađena.'},
+       napomena:'Izzy naslijedi dvorac u škotskom gorju i pokuša ga do Božića pretvoriti u mali hotel. Susjed koji piše trilere i majka koja se pojavi bez najave rade joj više problema od krova. Zimska, a nije zaslađena.',
+       opis:['Dvorac u škotskom gorju koji treba postati mali hotel do Božića, susjed koji piše trilere i majka koja se pojavi bez najave.']},
       {naslov:'Mala pekarnica u Brooklynu', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
-       cijena:12.95, stara:18.50, boja:'#EFE6D0', tamnoSlovo:true, visina:240,
+       slug:'mala-pekarnica-u-brooklynu', cijena:12.95, stara:18.50, boja:'#EFE6D0', tamnoSlovo:true,
+       visina:240, dostupno:true,
        hrbatSlika:'slike/hrbati/brooklyn.jpg',
        slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2022/12/mala-pekarnica-u-brooklynu.jpg',
-       napomena:'Sophie dolazi u New York pisati o hrani i zaliječiti prekid, a ispod stana joj je pekarnica zbog koje sve drugo čeka. Kolega s kojim se stalno sudara je točno tip muškarca kojeg je odlučila zaobići. Najgladnija knjiga u serijalu.'},
+       napomena:'Sophie dolazi u New York pisati o hrani i zaliječiti prekid, a ispod stana joj je pekarnica zbog koje sve drugo čeka. Kolega s kojim se stalno sudara je točno tip muškarca kojeg je odlučila zaobići. Najgladnija knjiga u serijalu.',
+       opis:['Sophie Benning dolazi u New York pisati o hrani za ugledni časopis i usput preboljeti prekid. Ispod njezina stana u Brooklynu je pekarnica zbog koje sve ostalo može pričekati.', 'Kolega Todd McLennan je točno onaj tip muškarca kojeg je odlučila zaobići, a onda se pokaže da o hrani govore istim jezikom.']},
       {naslov:'Mala slastičarnica u Parizu', autor:'Julie Caplin, Koncept', hrbatAutor:'Julie Caplin',
-       cijena:15.79, boja:'#EFE1E6', tamnoSlovo:true, visina:226,
+       slug:'mala-slasticarnica-u-parizu', cijena:15.79, boja:'#EFE1E6', tamnoSlovo:true, visina:226,
+       dostupno:true,
        slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2022/08/Mala-slasticarnica-MU.jpg',
-       napomena:'Nina pobjegne od obiteljskih očekivanja u pariški slastičarski pult i tamo naleti na najboljeg bratovog prijatelja, u kojeg je potajno zaljubljena godinama. Ako voliš tu zaljubljenost koja se skriva, počni ovdje.'}
+       napomena:'Nina pobjegne od obiteljskih očekivanja u pariški slastičarski pult i tamo naleti na najboljeg bratovog prijatelja, u kojeg je potajno zaljubljena godinama. Ako voliš tu zaljubljenost koja se skriva, počni ovdje.',
+       opis:['Nina radi ono što se od nje očekuje sve dok ne ode u Pariz i stane za slastičarski pult. Tamo naleti na Sebastiana Finlaya, najboljeg prijatelja svog brata, u kojeg je potajno zaljubljena godinama.', 'Ako voliš zaljubljenost koja se dugo skriva, ovo je dobra ulazna točka u serijal.']}
     ]
   },
   {
     naziv:'Spakiraj i idi',
     knjige:[
       {naslov:'Ljubavno pismo Parizu', autor:'Rebecca Raisin, Koncept', hrbatAutor:'Rebecca Raisin',
-       cijena:18.32, stara:22.90, boja:'#E0E9F1', tamnoSlovo:true, visina:234,
+       slug:'ljubavno-pismo-parizu', cijena:18.32, stara:22.90, boja:'#E0E9F1', tamnoSlovo:true,
+       visina:234, dostupno:true,
        hrbatSlika:'slike/hrbati/pismo-parizu.jpg',
        slika:'https://www.koncept-izdavastvo.hr/wp-content/uploads/2026/02/Ljubavno-pismo-Parizu-3D-Right-1-638x1000.png',
-       napomena:'Lilou prodaje knjige na pariškoj buvljoj tržnici i potajno spaja tuđe parove pod imenom Pariški Kupid. Onda njoj stigne pismo bez potpisa, od nekoga tko zna za to. Junakinja je knjižarka, pa ova ide u izlog.'},
+       napomena:'Lilou prodaje knjige na pariškoj buvljoj tržnici i potajno spaja tuđe parove pod imenom Pariški Kupid. Onda njoj stigne pismo bez potpisa, od nekoga tko zna za to. Junakinja je knjižarka, pa ova ide u izlog.',
+       opis:['Lilou prodaje knjige na pariškoj buvljoj tržnici i potajno spaja tuđe parove pod imenom Pariški Kupid. Kad uspješno spoji najbolju prijateljicu, njoj stigne ljubavno pismo bez potpisa, od nekoga tko zna za tu tajnu.', 'Ostaju tri muškarca i nijedan trag: Felix, Benoit i Pascale. Junakinja je knjižarka, pa ova stoji u izlogu.']},
       {naslov:'Mali dućan u Cockleberry Bayu', autor:'Nicola May, V.B.Z.', hrbatAutor:'Nicola May',
-       cijena:9.42, stara:17.12, boja:'#E2E7DE', tamnoSlovo:true, visina:238,
+       slug:'mali-ducan-u-cockleberry-bayu', cijena:9.42, stara:17.12, boja:'#E2E7DE',
+       tamnoSlovo:true, visina:238, isbn:'9789535203728', stranica:364, uvez:'Meki uvez',
+       dostupno:false,
        hrbatSlika:'slike/hrbati/cockleberry.jpg',
        slika:'https://www.ljevak.hr/Documents/Products/171763/32099.jpg',
-       napomena:'Rosa Larkin naslijedi prazan dućan u engleskom primorskom selu i ne smije ga prodati, nego mora naći nekoga tko ga zaslužuje. Ostavi London, dođe s jazavčarom i počne ispočetka. Junakinja se zove Rosa, kao i ona koja vodi naš dnevnik.'}
+       napomena:'Rosa Larkin naslijedi prazan dućan u engleskom primorskom selu i ne smije ga prodati, nego mora naći nekoga tko ga zaslužuje. Ostavi London, dođe s jazavčarom i počne ispočetka. Junakinja se zove Rosa, kao i ona koja vodi naš dnevnik.',
+       opis:['Rosi Larkin ništa ne ide od ruke sve dok ne naslijedi prazan dućan u engleskom primorskom selu. Dobrotvor je postavio uvjet: ne smije ga prodati, nego ga smije samo predati nekome tko ga zaslužuje.', 'Ostavi London, dođe s jazavčarom i počne ispočetka. Prva u serijalu o Cockleberry Bayu.']}
+    ]
+  },
+  {
+    naziv:'Toplo, bez viška drame',
+    knjige:[
+      {naslov:'Zamjena', autor:'Beth O\'Leary, Znanje', hrbatAutor:'Beth O\'Leary', slug:'zamjena',
+       cijena:15.79, boja:'#F6EFE3', tamnoSlovo:true, visina:226, isbn:'9789533605319', stranica:368,
+       uvez:'Meki uvez', dostupno:true,
+       hrbatSlika:'slike/hrbati/zamjena.jpg',
+       slika:'slike/naslovnice/zamjena.jpg',
+       napomena:'Unuka i baka zamijene živote na dva mjeseca. Obje se snađu bolje nego što su očekivale.',
+       opis:['Leena treba pauzu od posla, a njezina baka Eileen treba nešto novo. Zamijene živote na dva mjeseca: Leena preuzima selo u Yorkshireu, Eileen odlazi u London.', 'Beth O\'Leary vodi dvije junakinje razmaknute pola stoljeća i obje su jednako žive. Ako si čitala Cimere, ovo je ista toplina.']},
+      {naslov:'Putnici na liniji Hankyu', autor:'Hiro Arikawa, Znanje', hrbatAutor:'Hiro Arikawa',
+       slug:'putnici-na-liniji-hankyu', cijena:15.90, boja:'#E0E9F1', tamnoSlovo:true, visina:214,
+       isbn:'9789535303992', stranica:212, uvez:'Meki uvez', dostupno:true,
+       hrbatSlika:'slike/hrbati/hankyu.jpg',
+       slika:'slike/naslovnice/hankyu.jpg',
+       napomena:'Petnaest minuta vožnje i nekoliko stanica. Toliko treba da se nekome promijeni smjer.',
+       opis:['Kratka linija Hankyu između Takarazuke i Nishinomiye, nekoliko stanica i petnaest minuta vožnje. Putnici se međusobno ne poznaju, a ipak jedni drugima mijenjaju smjer.', 'Arikawa ih prati u dva navrata, u razmaku od pola godine. Nije ljubić u uobičajenom smislu, nego tiha knjiga o tome koliko malo zapravo treba.']},
+      {naslov:'Knjižara koja miriše na ljubav', autor:'Laurie Gilmore, Znanje',
+       hrbatAutor:'Laurie Gilmore', slug:'knjizara-koja-mirise-na-ljubav', cijena:16.90,
+       boja:'#E2E7DE', tamnoSlovo:true, visina:232, isbn:'9789535303985', stranica:304,
+       uvez:'Meki uvez', dostupno:true,
+       hrbatSlika:'slike/hrbati/knjizara-ljubav.jpg',
+       slika:'slike/naslovnice/knjizara-ljubav.jpg',
+       napomena:'Poruke skrivene među stranicama i knjižara u koju bih se doselila. Ovu držim na pultu.',
+       opis:['Hazel u knjižari Cimet pronalazi poruke skrivene među stranicama i kreće otkriti tko ih ostavlja. U potrazi joj se pridruži Noah, lokalni ribar.', 'Lov na blago preraste u nešto drugo, otprilike jednako toplo kao pecivo s cimetom koje se u toj knjižari poslužuje.']}
     ]
   },
   {
@@ -1198,7 +1259,8 @@ var POLICE = [
        napomena:'Brak koji se raspada i dvoje ljudi koji pokušavaju natrag. Druga prilika, napisana bez prečaca.'},
       {naslov:'Kralj zavisti', autor:'Ana Huang, Egmont', cijena:17.99, boja:'#6F7F66', visina:192,
        napomena:'Peta u serijalu, čita se i samostalno. Sporija je i tiša od ostalih.'},
-      {naslov:'Tajnovita uvala u Hrvatskoj', autor:'Julie Caplin, Koncept', cijena:13.14, boja:'#3E7A83', visina:180,
+      {naslov:'Tajnovita uvala u Hrvatskoj', autor:'Julie Caplin, Koncept', cijena:13.14,
+       boja:'#3E7A83', visina:180,
        napomena:'Jedina iz serijala smještena kod nas: jahta, Jadran i muškarac koji na prvu ide na živce. Ovu prodaješ turistima i domaćima podjednako.'}
     ]
   }
@@ -1375,7 +1437,11 @@ document.getElementById('shelves').addEventListener('click', function(e){
         // stara cijena se ispisuje samo ako je knjiga snižena
         (k.stara ? '<span class="detail__stara">' + k.stara.toFixed(2).replace('.', ',') + ' €</span>' : '') +
       '</span>' +
+      // knjiga koje nema na zalihi to kaze prije nego se klikne
+      (k.dostupno === false ? '<span class="detail__zaliha">Trenutno nije na zalihi</span>' : '') +
       '<button class="btn-add" data-add>Zamotaj mi je</button>' +
+      // knjige s naslovnicom imaju svoju stranicu
+      (k.slug ? '<a class="btn-vise" href="knjiga-' + k.slug + '.html">Više o knjizi</a>' : '') +
     '</div>';
   box.classList.add('is-on');
 });
