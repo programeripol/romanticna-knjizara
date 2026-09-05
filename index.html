@@ -542,16 +542,12 @@ body::after{
 
 /* bijela ploha stoji samo pod policama koje slazem rukom */
 .shelf-ploha{
-  background:linear-gradient(180deg,
-    rgba(255,255,255,0) 0%, #FFFFFF 7%, #FFFFFF 92%, rgba(255,255,255,0) 100%);
-  padding:clamp(1.4rem,3vw,2.6rem) 0 clamp(2rem,4vw,3.4rem);
-  margin-bottom:clamp(1rem,2vw,2rem);
+  padding:0 0 clamp(1.6rem,3vw,2.6rem);
 }
 
 /* naslov skupine polica: kategorija i raspolozenje */
 .skupina{
-  max-width:78rem;margin:3rem auto 1.4rem;padding-top:1.8rem;
-  background:linear-gradient(180deg, rgba(110,59,80,.13) 0%, rgba(110,59,80,0) 58%);
+  max-width:78rem;margin:3.4rem auto 1.4rem;
 }
 .skupina__ime{
   font-family:var(--display);font-weight:500;
@@ -668,18 +664,18 @@ body::after{
 .arrow:disabled{opacity:.22;cursor:default}
 .arrow svg{width:17px;height:17px}
 
-/* koliko je police pregledano */
+/* gdje si na polici: kratka crta koja klizi unutar prozirne crte */
 .track{
   position:relative;height:2px;margin:1.1rem 0 0;
   background:linear-gradient(90deg,
-    rgba(55,38,46,0), rgba(55,38,46,.13) 12%,
-    rgba(55,38,46,.13) 88%, rgba(55,38,46,0));
+    rgba(55,38,46,0), rgba(55,38,46,.09) 12%,
+    rgba(55,38,46,.09) 88%, rgba(55,38,46,0));
   border-radius:2px;
 }
 .track__thumb{
-  position:absolute;top:-1px;height:4px;border-radius:4px;
-  background:linear-gradient(90deg, rgba(118,95,45,.35), var(--gilt-lo), rgba(118,95,45,.35));
-  transition:left .18s ease, width .3s ease;
+  position:absolute;top:-1px;left:0;height:4px;width:46px;border-radius:4px;
+  background:linear-gradient(90deg, rgba(118,95,45,.2), var(--gilt-lo), rgba(118,95,45,.2));
+  transition:transform .18s ease;
 }
 .track.is-hidden{display:none}
 
@@ -1060,7 +1056,7 @@ a.detail__korice:hover{transform:translateY(-4px)}
 </div>
 
 <!-- POLICE -->
-<section class="section" id="police" style="padding-top:clamp(1.6rem,3.5vw,3rem)">
+<section class="section" id="police" style="padding-top:clamp(1.6rem,3.5vw,3rem);background:linear-gradient(180deg, rgba(255,255,255,0) 0, #FFFFFF 140px, #FFFFFF calc(100% - 140px), rgba(255,255,255,0) 100%)">
   <div class="section__head reveal">
     <p class="eyebrow">Police</p>
     <h2>Prvo raspoloženje,<br>pa onda abeceda.</h2>
@@ -3109,7 +3105,12 @@ function zaUsporedbu(t){
 function kljucRedanja(k, poredak){
   return poredak === 'naslov'
     ? zaUsporedbu(k.naslov)
-    : prezimeOd(k.autor).toUpperCase() + ' ' + zaUsporedbu(k.naslov);
+    : prezimeOd(k.autor).toUpperCase() + ' ' + String(k.autor || '').toUpperCase() +
+      ' ' + zaUsporedbu(k.naslov);
+}
+// hrvatska abeceda, da C, Ć, Č i S, Š stoje na svom mjestu, a ne iza Z
+function usporedi(a, b){
+  return String(a).localeCompare(String(b), 'hr', {numeric:true});
 }
 
 var PO_POLICI = 20, MALO = 10, PAR = 15, GORNJA = 32;
@@ -3118,8 +3119,7 @@ var REDNI = ['prvi','drugi','treći','četvrti','peti','šesti','sedmi','osmi','
 // knjige jedne kategorije razvrstane na police, po slovu, bez premalih polica
 function uPolice(knjige, poredak){
   var red = knjige.slice().sort(function(a, b){
-    var ka = kljucRedanja(a, poredak), kb = kljucRedanja(b, poredak);
-    return ka < kb ? -1 : ka > kb ? 1 : 0;
+    return usporedi(kljucRedanja(a, poredak), kljucRedanja(b, poredak));
   });
 
   // grupiranje po slovu
@@ -3253,7 +3253,9 @@ function nacrtajPolicu(polica, pi){
       var slovo = k.tamnoSlovo ? ';color:#3B2A16' : '';
       if(k.hrbatSlika){
         return '<button class="spine spine--foto" style="height:' + (k.visina || 195) + 'px;' +
+               'background-color:' + (k.boja || PALETA[ki % PALETA.length]) + ';' +
                'background-image:url(' + k.hrbatSlika + ')" ' +
+               'data-hrbat="' + esc(k.hrbatSlika) + '" ' +
                'data-shelf="' + pi + '" data-book="' + ki + '">' +
                '<span class="vizualno-skriveno">' + esc(k.naslov) + '</span></button>';
       }
@@ -3305,6 +3307,27 @@ function nacrtajPolicu(polica, pi){
   return el;
 }
 
+// ako fotografija hrbata ne stigne, hrbat se vraca na boju i tekst, nikad ne ostaje prazan
+function provjeriHrbate(el){
+  Array.prototype.forEach.call(el.querySelectorAll('.spine--foto'), function(b){
+    var izvor = b.getAttribute('data-hrbat');
+    if(!izvor) return;
+    var proba = new Image();
+    proba.onerror = function(){
+      var pol = POLICE[Number(b.getAttribute('data-shelf'))];
+      var k = pol && pol.knjige[Number(b.getAttribute('data-book'))];
+      if(!k) return;
+      b.classList.remove('spine--foto');
+      b.style.backgroundImage = 'none';
+      b.style.background = k.boja || '#6E3B50';
+      if(k.tamnoSlovo) b.style.color = '#3B2A16';
+      b.innerHTML = (k.hrbatAutor ? '<span class="spine__autor">' + esc(k.hrbatAutor) + '</span>' : '') +
+                    '<span class="spine__naslov">' + esc(k.naslov) + '</span>';
+    };
+    proba.src = izvor;
+  });
+}
+
 // strelice i traka koja pokazuje dokle je polica pregledana
 function ozivi(shelf){
   var red   = shelf.querySelector('.books, .covers');
@@ -3321,10 +3344,11 @@ function ozivi(shelf){
       shelf.querySelector('.arrows').style.display = 'none';
       return;
     }
-    var udio = red.clientWidth / red.scrollWidth;
-    var poz  = red.scrollLeft / visak;
-    thumb.style.width = (udio * 100) + '%';
-    thumb.style.left  = (poz * (100 - udio * 100)) + '%';
+    track.classList.remove('is-hidden');
+    // crta je uvijek jednako kratka, samo klizi lijevo desno prema mjestu na polici
+    var poz    = red.scrollLeft / visak;
+    var raspon = Math.max(0, track.clientWidth - thumb.offsetWidth);
+    thumb.style.transform = 'translateX(' + Math.round(poz * raspon) + 'px)';
     lijevo.disabled = red.scrollLeft < 4;
     desno.disabled  = red.scrollLeft > visak - 4;
   }
@@ -3362,6 +3386,7 @@ function nacrtajSve(sto){
     var el = nacrtajPolicu(polica, pi);
     cilj.appendChild(el);
     ozivi(el);
+    provjeriHrbate(el);
   }
 }
 
@@ -3463,8 +3488,7 @@ document.getElementById('police').addEventListener('click', function(e){
 
   function skup(ime, pod, knjige, kako){
     var red = knjige.slice().sort(function(a, b){
-      var ka = kljucRedanja(a, kako), kb = kljucRedanja(b, kako);
-      return ka < kb ? -1 : ka > kb ? 1 : 0;
+      return usporedi(kljucRedanja(a, kako), kljucRedanja(b, kako));
     });
     return '<section class="mreza__skup">' +
              '<h3 class="mreza__ime">' + esc(ime) + '</h3>' +
