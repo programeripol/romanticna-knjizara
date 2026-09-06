@@ -589,6 +589,47 @@ body::after{
   font-size:.86rem;line-height:1.6;color:var(--ink-soft);opacity:.9;
 }
 
+/* moja polica: ono što je posjetitelj sam označio */
+.moja{max-width:78rem;margin:0 auto 2.2rem}
+.moja__ime{
+  font-family:var(--display);font-weight:500;
+  font-size:clamp(1.1rem,2.1vw,1.45rem);color:var(--ink);margin:0;
+}
+.moja__pod{font-family:var(--hand);font-size:1.1rem;color:var(--damson);margin:.1rem 0 .8rem}
+.moja__filtri{display:flex;flex-wrap:wrap;gap:.28rem;align-items:center}
+.moja__f{
+  background:none;border:0;border-radius:2px;
+  font-family:var(--body);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-soft);padding:.5rem .8rem;cursor:pointer;
+  transition:background .3s ease,color .3s ease;
+}
+.moja__f:hover:not([disabled]){color:var(--ink)}
+.moja__f.is-on{color:var(--damson);background:rgba(110,59,80,.09)}
+.moja__f[disabled]{opacity:.32;cursor:default}
+.moja__n{opacity:.55;margin-left:.35rem;letter-spacing:.06em}
+.moja__ocisti{
+  background:none;border:0;border-radius:2px;margin-left:auto;
+  font-family:var(--body);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-soft);opacity:.65;padding:.5rem .55rem;cursor:pointer;
+  transition:opacity .3s ease,color .3s ease;
+}
+.moja__ocisti:hover{opacity:1;color:var(--damson)}
+.moja__prazno{
+  font-size:.9rem;line-height:1.65;color:var(--ink-soft);opacity:.9;
+  margin:.2rem 0 0;padding-right:clamp(0rem,32%,30rem);
+}
+
+/* oznake u panelu s detaljima */
+.oznake{display:flex;flex-wrap:wrap;gap:.28rem;margin:.55rem 0 0}
+.oznaka{
+  background:rgba(55,38,46,.055);border:0;border-radius:2px;
+  font-family:var(--body);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-soft);padding:.42rem .58rem;cursor:pointer;
+  transition:background .3s ease,color .3s ease;
+}
+.oznaka:hover{color:var(--ink);background:rgba(55,38,46,.1)}
+.oznaka.is-on{background:rgba(110,59,80,.15);color:var(--damson)}
+
 /* mreza svih knjiga */
 .mreza{max-width:78rem;margin:0 auto}
 .mreza__skup{margin:0 0 3rem}
@@ -1093,6 +1134,14 @@ a.detail__korice:hover{transform:translateY(-4px)}
   </div>
 
   <p class="ograda reveal">Hrbati na policama nisu fotografije pravih knjiga. Boje, visine i debljine složili smo tako da polica izgleda kao prava polica, a ne kao red jednakih kutija, pa omjeri nisu točni. Dio naslovnica izrađen je umjetnom inteligencijom, da izlog bude lijep i prepoznatljiv. Prave naslovnice i hrbate dodajemo kako stižu.</p>
+
+  <div class="moja reveal" id="moja">
+    <h3 class="moja__ime">Moja polica</h3>
+    <p class="moja__pod">Ono što si označila dok si prolazila kroz police.</p>
+    <div class="moja__filtri" id="moja-filtri" role="group" aria-label="Filtriraj moju policu"></div>
+    <div class="shelf-wrap" id="moja-wrap"></div>
+    <p class="moja__prazno" id="moja-prazno">Otvori bilo koju knjigu na polici i reci imaš li je, jesi li je pročitala, želiš li je ili ti se samo sviđa. Sve što označiš skuplja se ovdje i ostaje spremljeno u tvom pregledniku, na ovom uređaju.</p>
+  </div>
 
   <div class="shelf-ploha">
     <div class="shelf-wrap" id="shelves"></div>
@@ -3240,9 +3289,11 @@ function redniDodatak(pi, j){
   return (n + j) % DODACI.length;
 }
 
-function nacrtajPolicu(polica, pi){
+// izvor je oznaka police koja ne stoji u nizu POLICE, na primjer moja polica
+function nacrtajPolicu(polica, pi, izvor){
   var el = document.createElement('div');
   el.className = 'shelf reveal';
+  var oznaka = izvor ? ' data-izvor="' + izvor + '"' : '';
   var tijelo;
 
   if(polica.prikaz === 'naslovnice'){
@@ -3255,7 +3306,7 @@ function nacrtajPolicu(polica, pi){
       var lice = k.slika
         ? '<span class="cover__art cover__art--foto">'
         : '<span class="cover__art" style="background:' + k.boja + '">';
-      return '<button class="cover" data-shelf="' + pi + '" data-book="' + ki + '">' +
+      return '<button class="cover" data-shelf="' + pi + '" data-book="' + ki + '"' + oznaka + '>' +
                lice + art + '</span>' +
                '<span class="cover__meta">' +
                  '<span class="cover__t">' + esc(k.naslov) + '</span>' +
@@ -3273,7 +3324,7 @@ function nacrtajPolicu(polica, pi){
                'background-color:' + (k.boja || PALETA[ki % PALETA.length]) + ';' +
                'background-image:url(' + k.hrbatSlika + ')" ' +
                'data-hrbat="' + esc(k.hrbatSlika) + '" ' +
-               'data-shelf="' + pi + '" data-book="' + ki + '">' +
+               'data-shelf="' + pi + '" data-book="' + ki + '"' + oznaka + '>' +
                '<span class="vizualno-skriveno">' + esc(k.naslov) + '</span></button>';
       }
       var sadrzaj = k.hrbatAutor
@@ -3282,11 +3333,11 @@ function nacrtajPolicu(polica, pi){
         : '<span class="spine__naslov">' + esc(k.naslov) + '</span>';
       var nema = k.dostupno === false ? ' spine--nema' : '';
       return '<button class="spine' + nema + '" style="background:' + boja + ';height:' + (k.visina || 195) + 'px' + slovo +
-             '" data-shelf="' + pi + '" data-book="' + ki + '">' + sadrzaj + '</button>';
+             '" data-shelf="' + pi + '" data-book="' + ki + '"' + oznaka + '>' + sadrzaj + '</button>';
     });
 
     // predmeti se ubacuju među knjige, samo na pet pocetnih polica
-    var koliko = pi < OSNOVNE
+    var koliko = (!izvor && pi < OSNOVNE)
       ? Math.floor(DODACI.length / OSNOVNE) + (pi < (DODACI.length % OSNOVNE) ? 1 : 0)
       : 0;
     var mjesta = [];
@@ -3324,6 +3375,136 @@ function nacrtajPolicu(polica, pi){
   return el;
 }
 
+/* ---------- moja polica ---------- */
+// police koje ne stoje u nizu POLICE, za sada samo moja polica
+var VANJSKE = {};
+
+// iz hrbata ili kartice natrag do knjige, bez obzira s koje police dolazi
+function knjigaOd(el){
+  if(el.dataset.dodatak !== undefined) return DODACI[el.dataset.dodatak];
+  var polica = el.dataset.izvor ? VANJSKE[el.dataset.izvor] : POLICE[Number(el.dataset.shelf)];
+  return polica ? polica.knjige[Number(el.dataset.book)] : null;
+}
+
+var OZNAKE = [
+  {kod:'imam',   ime:'Imam je',     kratko:'Imam'},
+  {kod:'citala', ime:'Pročitala',   kratko:'Pročitala'},
+  {kod:'zelim',  ime:'Želim je',    kratko:'Želim'},
+  {kod:'lajk',   ime:'Sviđa mi se', kratko:'Sviđa mi se'}
+];
+var SPREMNIK = 'romanticna-knjizara-moja-polica';
+
+// preglednik ponekad ne da spremnik, u tom slucaju oznake vrijede dok je stranica otvorena
+function ucitajMoje(){
+  try{
+    var s = window.localStorage.getItem(SPREMNIK);
+    var d = s ? JSON.parse(s) : null;
+    return (d && typeof d === 'object') ? d : {};
+  }catch(e){ return {}; }
+}
+function spremiMoje(){
+  try{ window.localStorage.setItem(SPREMNIK, JSON.stringify(MOJE)); }catch(e){}
+}
+var MOJE = ucitajMoje();
+
+function kljucKnjige(k){
+  return (String(k.naslov || '') + '|' + String(k.autor || '')).toLowerCase();
+}
+function oznakeZa(k){ return MOJE[kljucKnjige(k)] || []; }
+function imaOznaku(k, kod){ return oznakeZa(k).indexOf(kod) !== -1; }
+function prebaciOznaku(k, kod){
+  var kl = kljucKnjige(k);
+  var lista = (MOJE[kl] || []).slice();
+  var n = lista.indexOf(kod);
+  if(n === -1) lista.push(kod); else lista.splice(n, 1);
+  if(lista.length) MOJE[kl] = lista; else delete MOJE[kl];
+  spremiMoje();
+}
+
+// sve knjige stranice na jednom mjestu, za trazenje po kljucu
+var SVE_KNJIGE = (function(){
+  var sve = [], vidjeno = {};
+  function dodaj(k){
+    if(!k || k.vrsta === 'dodatak') return;
+    var kl = kljucKnjige(k);
+    if(vidjeno[kl]) return;
+    vidjeno[kl] = true;
+    sve.push(k);
+  }
+  for(var i = 0; i < OSNOVNE; i++) POLICE[i].knjige.forEach(dodaj);
+  KATALOG.forEach(function(s){ s.knjige.forEach(dodaj); });
+  return sve;
+})();
+var PO_KLJUCU = {};
+SVE_KNJIGE.forEach(function(k){ PO_KLJUCU[kljucKnjige(k)] = k; });
+
+// gumbi za oznacavanje, stoje u panelu s detaljima
+function gumbiOznaka(k){
+  return '<div class="oznake" role="group" aria-label="Označi ovu knjigu">' +
+    OZNAKE.map(function(o){
+      var on = imaOznaku(k, o.kod);
+      return '<button class="oznaka' + (on ? ' is-on' : '') + '" type="button" ' +
+             'data-oznaka="' + o.kod + '" aria-pressed="' + (on ? 'true' : 'false') + '">' +
+             o.ime + '</button>';
+    }).join('') + '</div>';
+}
+
+var MOJA_POLICA = {naziv:'Moja polica', knjige:[]};
+VANJSKE.moja = MOJA_POLICA;
+var FILTAR = 'sve';
+
+function nacrtajMoju(){
+  var kutija  = document.getElementById('moja');
+  var filtri  = document.getElementById('moja-filtri');
+  var wrap    = document.getElementById('moja-wrap');
+  var prazno  = document.getElementById('moja-prazno');
+  if(!kutija || !filtri || !wrap) return;
+
+  var oznacene = SVE_KNJIGE.filter(function(k){ return oznakeZa(k).length > 0; });
+  var broj = {sve: oznacene.length};
+  OZNAKE.forEach(function(o){
+    broj[o.kod] = oznacene.filter(function(k){ return imaOznaku(k, o.kod); }).length;
+  });
+  if(FILTAR !== 'sve' && !broj[FILTAR]) FILTAR = 'sve';
+
+  var redovi = [{kod:'sve', kratko:'Sve'}].concat(OZNAKE);
+  filtri.innerHTML = redovi.map(function(o){
+    var on = o.kod === FILTAR;
+    return '<button class="moja__f' + (on ? ' is-on' : '') + '" type="button" ' +
+           'data-filtar="' + o.kod + '" aria-pressed="' + (on ? 'true' : 'false') + '"' +
+           (broj[o.kod] ? '' : ' disabled') + '>' + o.kratko +
+           '<span class="moja__n">' + broj[o.kod] + '</span></button>';
+  }).join('') +
+  (oznacene.length ? '<button class="moja__ocisti" type="button" id="moja-ocisti">Očisti policu</button>' : '');
+
+  if(!oznacene.length){
+    wrap.innerHTML = '';
+    wrap.hidden = true;
+    prazno.hidden = false;
+    return;
+  }
+  prazno.hidden = true;
+  wrap.hidden = false;
+
+  var izbor = FILTAR === 'sve'
+    ? oznacene
+    : oznacene.filter(function(k){ return imaOznaku(k, FILTAR); });
+  izbor = izbor.slice().sort(function(a, b){
+    return usporedi(kljucRedanja(a, PORETKOM), kljucRedanja(b, PORETKOM));
+  });
+
+  var ime = FILTAR === 'sve' ? 'Sve što si označila' : null;
+  OZNAKE.forEach(function(o){ if(o.kod === FILTAR) ime = o.kratko; });
+  MOJA_POLICA.naziv  = ime;
+  MOJA_POLICA.knjige = izbor;
+
+  wrap.innerHTML = '';
+  var el = nacrtajPolicu(MOJA_POLICA, 0, 'moja');
+  wrap.appendChild(el);
+  ozivi(el);
+  provjeriHrbate(el);
+}
+
 // ako fotografija hrbata ne stigne, hrbat se vraca na boju i tekst, nikad ne ostaje prazan
 function provjeriHrbate(el){
   Array.prototype.forEach.call(el.querySelectorAll('.spine--foto'), function(b){
@@ -3331,8 +3512,7 @@ function provjeriHrbate(el){
     if(!izvor) return;
     var proba = new Image();
     proba.onerror = function(){
-      var pol = POLICE[Number(b.getAttribute('data-shelf'))];
-      var k = pol && pol.knjige[Number(b.getAttribute('data-book'))];
+      var k = knjigaOd(b);
       if(!k) return;
       b.classList.remove('spine--foto');
       b.style.backgroundImage = 'none';
@@ -3409,15 +3589,17 @@ function nacrtajSve(sto){
 
 sagradiKatalog(PORETKOM);
 nacrtajSve('sve');
+nacrtajMoju();
 
 // otvori detalj knjige
 document.getElementById('police').addEventListener('click', function(e){
   var spine = e.target.closest('.spine, .cover, .stvar');
   if(!spine) return;
   var jeDodatak = spine.dataset.dodatak !== undefined;
-  var k = jeDodatak ? DODACI[spine.dataset.dodatak]
-                    : POLICE[spine.dataset.shelf].knjige[spine.dataset.book];
-  var kljuc = jeDodatak ? 'd' + spine.dataset.dodatak : spine.dataset.book;
+  var k = knjigaOd(spine);
+  if(!k) return;
+  var kljuc = jeDodatak ? 'd' + spine.dataset.dodatak
+                        : (spine.dataset.izvor || '') + spine.dataset.book;
   var box = spine.closest('.shelf').querySelector('.detail');
   var isSame = box.dataset.open === kljuc && box.classList.contains('is-on');
   if(isSame){ box.classList.remove('is-on'); return; }
@@ -3439,6 +3621,7 @@ document.getElementById('police').addEventListener('click', function(e){
       '<p class="detail__title">' + naslov + '</p>' +
       '<p class="detail__author">' + esc(k.autor || '') + '</p>' +
       '<p class="detail__note">' + (k.napomena || '') + '</p>' +
+      (jeDodatak ? '' : gumbiOznaka(k)) +
     '</div>' +
     '<div class="detail__side">' +
       '<span class="detail__price">' + k.cijena.toFixed(2).replace('.', ',') + ' €' +
@@ -3450,7 +3633,42 @@ document.getElementById('police').addEventListener('click', function(e){
       '<button class="btn-add" data-add>Zamotaj mi je</button>' +
       (k.slug ? '<a class="btn-vise" href="knjiga-' + k.slug + '.html">' + (k.vrsta === 'dodatak' ? 'Više o artiklu' : 'Više o knjizi') + '</a>' : '') +
     '</div>';
+  box.dataset.kljuc = jeDodatak ? '' : kljucKnjige(k);
   box.classList.add('is-on');
+});
+
+// klik po oznaci: imam, procitala, zelim, svida mi se
+document.getElementById('police').addEventListener('click', function(e){
+  var g = e.target.closest('.oznaka');
+  if(!g) return;
+  var box = g.closest('.detail');
+  var k = box && PO_KLJUCU[box.dataset.kljuc];
+  if(!k) return;
+  prebaciOznaku(k, g.dataset.oznaka);
+  var on = imaOznaku(k, g.dataset.oznaka);
+  g.classList.toggle('is-on', on);
+  g.setAttribute('aria-pressed', on ? 'true' : 'false');
+  nacrtajMoju();
+});
+
+// filtri i praznjenje moje police
+document.getElementById('moja').addEventListener('click', function(e){
+  var f = e.target.closest('.moja__f');
+  if(f && !f.disabled){
+    FILTAR = f.dataset.filtar;
+    nacrtajMoju();
+    return;
+  }
+  if(e.target.closest('#moja-ocisti')){
+    MOJE = {};
+    spremiMoje();
+    FILTAR = 'sve';
+    nacrtajMoju();
+    document.querySelectorAll('.oznaka.is-on').forEach(function(b){
+      b.classList.remove('is-on');
+      b.setAttribute('aria-pressed', 'false');
+    });
+  }
 });
 
 /* ---------- prikaz i poredak ---------- */
@@ -3514,10 +3732,13 @@ document.getElementById('police').addEventListener('click', function(e){
            '</section>';
   }
 
+  var moja = document.getElementById('moja');
+
   function prebaci(kao){
     var jeMreza = kao === 'mreza';
     ploha.hidden = jeMreza;
     wrapKatalog.hidden = jeMreza;
+    if(moja) moja.hidden = jeMreza;
     poredak.hidden = false;
     mreza.hidden = !jeMreza;
     if(jeMreza) slozi(PORETKOM);
@@ -3543,6 +3764,7 @@ document.getElementById('police').addEventListener('click', function(e){
       });
       sagradiKatalog(PORETKOM);
       nacrtajSve('katalog');
+      nacrtajMoju();
       if(!mreza.hidden){ slozena = ''; slozi(PORETKOM); }
       // otkrivanje ponovno ozivi nove elemente
       document.querySelectorAll('#shelves-katalog .reveal').forEach(function(e){
